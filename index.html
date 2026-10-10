@@ -1,0 +1,1116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>호텔 최저가 예약 가이드</title>
+<meta name="description" content="아고다·트립닷컴·부킹닷컴·호텔스닷컴·익스피디아를 같은 조건으로 비교하고 실제로 내는 돈을 계산하는 실전 가이드 (2026년 10월 10일 기준)">
+<meta property="og:title" content="🏨 호텔 최저가 예약 가이드">
+<meta property="og:description" content="8단계 체크리스트 · 부담액 계산기 · 결제 통화 비교 · 취소 마감 알림">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1f5fd6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%A8%3C/text%3E%3C/svg%3E">
+<script>
+/* 화면 깜빡임 방지: 저장된 테마를 먼저 적용 */
+(function(){try{var t=localStorage.getItem('hotelGuide:v3:theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);var m=localStorage.getItem('hotelGuide:v3:mode');if(m==='simple')document.documentElement.setAttribute('data-mode','simple');}catch(e){}})();
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#f5f7fb; --card:#ffffff; --ink:#172033; --sub:#556073; --line:#e3e7ef;
+  --blue:#1f5fd6; --blue-soft:#e8f0ff;
+  --green:#127a45; --green-soft:#e6f6ee;
+  --amber:#965500; --amber-soft:#fff4e0;
+  --red:#b72d27; --red-soft:#fdecea;
+  --gray-soft:#eef1f6;
+  --shadow:0 1px 2px rgba(20,35,63,.06),0 4px 16px rgba(20,35,63,.06);
+  --r:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1420; --card:#171e2d; --ink:#e8ecf4; --sub:#a3adc0; --line:#2a3346;
+    --blue:#7aa8ff; --blue-soft:#1b2a48;
+    --green:#5cd497; --green-soft:#16302a;
+    --amber:#f3bd6a; --amber-soft:#33281a;
+    --red:#ff8a83; --red-soft:#3a1f22; --gray-soft:#1e2637;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1420; --card:#171e2d; --ink:#e8ecf4; --sub:#a3adc0; --line:#2a3346;
+  --blue:#7aa8ff; --blue-soft:#1b2a48;
+  --green:#5cd497; --green-soft:#16302a;
+  --amber:#f3bd6a; --amber-soft:#33281a;
+  --red:#ff8a83; --red-soft:#3a1f22; --gray-soft:#1e2637;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.7;font-size:16px;word-break:keep-all;overflow-wrap:anywhere;padding-bottom:72px}
+a{color:var(--blue)}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+header.hero{background:linear-gradient(135deg,#14233f 0%,#1f5fd6 100%);color:#fff;padding:40px 0 28px}
+.hero .wrap{position:relative}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 12px;font-size:13px}
+.hero h1{font-size:30px;line-height:1.3;margin:14px 0 8px;letter-spacing:-.5px}
+.hero p.lead{font-size:17px;opacity:.95;margin:0 0 20px}
+.rules{display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}
+.rule{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:14px}
+.rule b{display:block;font-size:21px}
+.rule span{font-size:14px;opacity:.95}
+.hero-tools{position:absolute;right:16px;top:0;display:flex;gap:6px}
+.hero-tools button{font:inherit;font-size:13px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:4px 11px;cursor:pointer}
+.hero-tools button[aria-pressed="true"]{background:#fff;color:#14233f}
+/* 목차 */
+nav.toc{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line)}
+nav.toc .wrap{position:relative}
+.toc-scroll{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+.toc-scroll::-webkit-scrollbar{display:none}
+.toc-scroll a{flex:none;text-decoration:none;color:var(--ink);background:var(--gray-soft);border-radius:999px;padding:6px 12px;font-size:14px;white-space:nowrap}
+.toc-scroll a:hover{background:var(--blue-soft);color:var(--blue)}
+.toc-fade{position:absolute;right:16px;top:0;bottom:0;width:44px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--card));display:flex;align-items:center;justify-content:flex-end;color:var(--sub);font-size:18px;transition:opacity .2s}
+.toc-fade.hide{opacity:0}
+section{padding:28px 0 4px;scroll-margin-top:64px}
+h2{font-size:23px;margin:0 0 6px;letter-spacing:-.3px;display:flex;align-items:center;gap:10px}
+h2 .num{flex:none;width:32px;height:32px;border-radius:10px;background:var(--blue);color:var(--card);font-size:15px;display:grid;place-items:center}
+.desc{color:var(--sub);margin:0 0 16px}
+h3{font-size:18px;margin:18px 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.grid2{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+.box{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:15px}
+.box.tip{background:var(--green-soft);border-left:4px solid var(--green)}
+.box.warn{background:var(--amber-soft);border-left:4px solid var(--amber)}
+.box.danger{background:var(--red-soft);border-left:4px solid var(--red)}
+.box.info{background:var(--blue-soft);border-left:4px solid var(--blue)}
+.box b.t{display:block;margin-bottom:2px}
+.pill{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;vertical-align:middle;white-space:nowrap}
+.p-must{background:var(--red-soft);color:var(--red)}
+.p-opt{background:var(--gray-soft);color:var(--sub)}
+.p-ok{background:var(--green-soft);color:var(--green)}
+.p-warn{background:var(--amber-soft);color:var(--amber)}
+.p-no{background:var(--red-soft);color:var(--red)}
+.p-q{background:var(--gray-soft);color:var(--sub)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:top}
+th{background:var(--gray-soft);font-weight:700;font-size:14px}
+td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tscroll{overflow-x:auto}
+.tscroll table.wide{min-width:480px}
+/* 버튼 */
+.btn{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:7px 12px;cursor:pointer;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.btn:hover{border-color:var(--blue);color:var(--blue)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:var(--card)}
+.btn.primary:hover{opacity:.9;color:var(--card)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+/* 빠른 검색 */
+.qsearch{display:flex;gap:8px;flex-wrap:wrap}
+.qsearch input{flex:1 1 220px;min-width:0;font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+.linkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:12px}
+.linkgrid a{justify-content:center}
+/* 체크리스트 */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow);cursor:pointer;transition:.15s}
+.step.done{background:var(--green-soft);border-color:var(--green)}
+.step input{width:22px;height:22px;margin-top:3px;accent-color:var(--green);flex:none;cursor:pointer}
+.step .st{font-weight:700;font-size:17px}
+.step .sd{color:var(--sub);font-size:15px}
+.step.done .st{text-decoration:line-through;text-decoration-color:var(--green)}
+.progress{height:10px;background:var(--gray-soft);border-radius:999px;overflow:hidden;margin:6px 0 14px}
+.progress i{display:block;height:100%;width:0;background:var(--green);transition:width .25s}
+.prog-row{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--sub)}
+/* 용어 */
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden}
+summary{cursor:pointer;padding:12px 14px;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋";color:var(--blue);flex:none}
+details[open] summary::after{content:"－"}
+details .dd{padding:0 14px 14px}
+details .ex{color:var(--sub);font-size:14px;margin-top:4px}
+/* 탭 */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tab{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer;font-size:15px}
+.tab[aria-selected="true"]{background:var(--blue);color:var(--card);border-color:var(--blue)}
+.panel[hidden]{display:none}
+.panel ol,.panel ul{padding-left:20px;margin:6px 0}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.flow span{background:var(--blue-soft);color:var(--blue);border-radius:8px;padding:4px 10px;font-size:14px;font-weight:600}
+.flow em{font-style:normal;color:var(--sub)}
+/* 계산기 */
+.calc-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.nights{display:flex;align-items:center;gap:8px;font-size:15px}
+.nights input{width:72px}
+.calc{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.opt{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--card);position:relative}
+.opt.best{border:2px solid var(--green);box-shadow:0 0 0 4px var(--green-soft)}
+.opt.bad{border:2px solid var(--red)}
+.opt label.f{display:block;font-size:13px;color:var(--sub);margin:9px 0 3px}
+.opt input[type=text],.opt input[type=number],.field{width:100%;font:inherit;font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.opt input.name{font-weight:700}
+.chk{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--sub);margin-top:5px;cursor:pointer}
+.chk input{width:17px;height:17px;accent-color:var(--blue);flex:none}
+.opt .del{position:absolute;right:10px;top:10px;padding:2px 8px;font-size:13px}
+.res{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;font-size:14px}
+.res div{display:flex;justify-content:space-between;gap:6px}
+.res div b{font-variant-numeric:tabular-nums}
+.res .big{font-size:17px;margin-top:4px}
+.res .big b{color:var(--blue)}
+.res .avg{color:var(--sub)}
+.warns{margin-top:8px;font-size:13px;color:var(--red)}
+.warns:empty{display:none}
+.tags{margin-top:6px;display:flex;gap:4px;flex-wrap:wrap}
+.summary td,.summary th{font-size:14px;padding:8px 6px}
+.summary tr.top td{background:var(--green-soft);font-weight:700}
+.verdict p{margin:6px 0}
+.small{font-size:13px;color:var(--sub)}
+/* 통화·알림 */
+.form{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.form label{display:block;font-size:13px;color:var(--sub);margin-bottom:3px}
+.result{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--gray-soft);font-size:15px}
+.result b.big{font-size:18px}
+/* 타임라인 */
+.tl{position:relative;margin:8px 0 0 8px;padding-left:22px;border-left:3px solid var(--blue-soft)}
+.tl li{list-style:none;margin:0 0 14px;position:relative}
+.tl li::before{content:"";position:absolute;left:-31px;top:6px;width:15px;height:15px;border-radius:50%;background:var(--blue);border:3px solid var(--card)}
+.tl li b{display:block}
+footer{padding:28px 0 20px;color:var(--sub);font-size:14px}
+.src li{margin-bottom:6px}
+.toplink{position:fixed;right:14px;bottom:14px;width:42px;height:42px;border-radius:50%;background:var(--blue);color:var(--card);display:grid;place-items:center;text-decoration:none;font-size:19px;box-shadow:0 2px 10px rgba(0,0,0,.2);z-index:30}
+.toast{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:#172033;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+.toast.on{opacity:1}
+/* 간단 보기 */
+:root[data-mode="simple"] .detail-only{display:none!important}
+.mode-note{display:none}
+:root[data-mode="simple"] .mode-note{display:block}
+@media (max-width:720px){
+  .hero h1{font-size:25px}
+  .rules{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+  h2{font-size:20px}
+  .hero-tools{position:static;margin-bottom:10px}
+}
+@media print{
+  body{padding-bottom:0}
+  nav.toc,.toplink,.hero-tools,.no-print,.toast{display:none!important}
+  header.hero{background:#14233f!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card,.step,details,.opt{box-shadow:none;break-inside:avoid}
+  .panel[hidden]{display:block!important}
+  :root .detail-only,:root[data-mode="simple"] .detail-only{display:block!important}
+  :root[data-mode="simple"] .toc-scroll a.detail-only{display:none!important}
+  section{padding-top:14px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-tools no-print">
+      <button type="button" id="modeBtn" aria-pressed="false">⚡ 간단 보기</button>
+      <button type="button" id="themeBtn">🌓 화면 모드</button>
+    </div>
+    <span class="tag">2026년 10월 10일 기준 · 호텔 최저가 예약 가이드 v3.1</span>
+    <h1>🏨 호텔 최저가 예약 가이드</h1>
+    <p class="lead">아고다·트립닷컴·부킹닷컴·호텔스닷컴·익스피디아를 <b>같은 조건</b>으로 비교하고, <b>실제로 내는 돈</b>을 기준으로 고르는 방법</p>
+    <div class="rules">
+      <div class="rule"><b>① 같은 방끼리</b><span>날짜·객실·인원·취소 조건을 똑같이 맞추고 비교해요</span></div>
+      <div class="rule"><b>② 진짜 내는 돈</b><span>‘캐시백 뺀 가격’이 아니라 결제 화면 금액을 봐요</span></div>
+      <div class="rule"><b>③ 예약 후 한 번 더</b><span>무료 취소로 잡고, 취소 마감 2~3일 전에 다시 확인해요</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="목차">
+  <div class="wrap">
+    <div class="toc-scroll" id="tocScroll">
+      <a href="#search">🔎 바로가기</a>
+      <a href="#steps">✅ 8단계</a>
+      <a href="#calc">🧮 계산기</a>
+      <a href="#fx">💱 통화 비교</a>
+      <a href="#alarm">⏰ 취소 알림</a>
+      <a class="detail-only" href="#words">📖 쉬운 말</a>
+      <a class="detail-only" href="#ota">🏢 사이트별</a>
+      <a class="detail-only" href="#discount">🏷️ 할인 종류</a>
+      <a class="detail-only" href="#pay">💳 결제 통화</a>
+      <a class="detail-only" href="#rebook">🔁 재예약</a>
+      <a class="detail-only" href="#match">⚖️ 조건 맞추기</a>
+      <a class="detail-only" href="#guarantee">🛡️ 최저가 보장</a>
+      <a class="detail-only" href="#case">🔍 사례 검증</a>
+      <a class="detail-only" href="#ox">⭕❌ 소문 판정</a>
+      <a class="detail-only" href="#src">📚 출처</a>
+    </div>
+    <div class="toc-fade" id="tocFade" aria-hidden="true">›</div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<div class="box info mode-note no-print"><b class="t">⚡ 간단 보기 중이에요</b>예약에 바로 쓰는 도구만 보여요. 설명이 궁금하면 위의 ‘간단 보기’ 버튼을 다시 눌러 ‘자세히 보기’로 바꾸세요.</div>
+
+<!-- 1. 바로가기 -->
+<section id="search">
+  <h2><span class="num">1</span>호텔 검색 바로가기</h2>
+  <p class="desc">호텔 이름을 넣고 검색하면 새 창에서 열려요. 날짜·인원은 열린 사이트에서 입력해요.</p>
+  <div class="card">
+    <form class="qsearch" id="qForm" autocomplete="off">
+      <input id="qName" type="text" placeholder="예: Hotel Resol Stay Akihabara" aria-label="호텔 이름">
+      <button class="btn primary" type="submit">구글에서 검색</button>
+      <button class="btn" type="button" id="qNaver">네이버에서 검색</button>
+    </form>
+    <div class="linkgrid">
+      <a class="btn" href="https://www.google.com/travel/hotels" target="_blank" rel="noopener">구글 호텔 ↗</a>
+      <a class="btn" href="https://travel.naver.com/hotels" target="_blank" rel="noopener">네이버 호텔 ↗</a>
+      <a class="btn" href="https://www.agoda.com/ko-kr/" target="_blank" rel="noopener">아고다 ↗</a>
+      <a class="btn" href="https://kr.trip.com/" target="_blank" rel="noopener">트립닷컴 ↗</a>
+      <a class="btn" href="https://www.booking.com/" target="_blank" rel="noopener">부킹닷컴 ↗</a>
+      <a class="btn" href="https://kr.hotels.com/" target="_blank" rel="noopener">호텔스닷컴 ↗</a>
+      <a class="btn" href="https://www.expedia.co.kr/" target="_blank" rel="noopener">익스피디아 ↗</a>
+    </div>
+    <p class="small" style="margin:10px 0 0">공식 사이트로 바로 연결돼요. 낯선 ‘최저가 변환’ 사이트에는 로그인·카드 정보를 넣지 마세요.</p>
+  </div>
+</section>
+
+<!-- 2. 8단계 -->
+<section id="steps">
+  <h2><span class="num">2</span>따라 하는 8단계</h2>
+  <p class="desc"><span class="pill p-must">필수</span>는 꼭, <span class="pill p-opt">추가</span>는 가격 차이가 크거나 오래 묵을 때 해요. 체크 상태는 이 기기에만 저장돼요.</p>
+  <div class="prog-row"><span id="progText">0 / 8 완료</span><span class="no-print" style="display:flex;gap:6px"><button class="btn" id="resetSteps" type="button">체크만 지우기</button><button class="btn" id="newTrip" type="button">🆕 새 예약 시작</button></span></div>
+  <div class="progress"><i id="progBar"></i></div>
+  <ul class="steps" id="stepList">
+    <li class="step"><input type="checkbox" id="s0" aria-labelledby="sl0"><div id="sl0"><div class="st">1. 구글 호텔에서 기준 가격 확인 <span class="pill p-must">필수</span> <span class="pill p-q">약 2분</span></div><div class="sd">호텔 이름·날짜·인원을 넣으면 여러 사이트 가격이 한 화면에 나와요. 여기 가격은 ‘출발점’이에요. 회원가·쿠폰·카드 할인은 빠져 있어서 실제 최저가는 더 낮을 수 있어요.</div></div></li>
+    <li class="step"><input type="checkbox" id="s1" aria-labelledby="sl1"><div id="sl1"><div class="st">2. 아고다·트립닷컴·부킹닷컴에 로그인해서 가격 보기 <span class="pill p-must">필수</span> <span class="pill p-q">약 3분</span></div><div class="sd">로그인해야만 보이는 ‘회원 가격’이 있어요. 같은 방, 같은 조건인지 꼭 확인해요.</div></div></li>
+    <li class="step"><input type="checkbox" id="s2" aria-labelledby="sl2"><div id="sl2"><div class="st">3. 가장 싼 두 곳은 앱으로도 보기 <span class="pill p-opt">추가</span> <span class="pill p-q">약 2분</span></div><div class="sd">앱에만 있는 쿠폰이나 특가가 있을 수 있어요. 쿠폰을 넣고 결제 금액이 정말 줄었는지 확인해요.</div></div></li>
+    <li class="step"><input type="checkbox" id="s3" aria-labelledby="sl3"><div id="sl3"><div class="st">4. 다른 길로 들어가 보기 <span class="pill p-opt">추가</span> <span class="pill p-q">약 2분</span></div><div class="sd">구글 호텔·구글 지도·네이버 호텔·카드사 이벤트 페이지를 거쳐 같은 사이트에 들어가 봐요. 들어온 길에 따라 가격이 다를 수 있어요. 시크릿 모드(비로그인 가격)는 비교용으로 한 번만.</div></div></li>
+    <li class="step"><input type="checkbox" id="s4" aria-labelledby="sl4"><div id="sl4"><div class="st">5. 카드·간편결제 할인 확인 <span class="pill p-must">필수</span> <span class="pill p-q">약 2분</span></div><div class="sd">카드사 공식 이벤트, 네이버페이·카카오페이 행사를 확인해요. <b>지금 깎이는 할인(즉시)</b>인지 <b>나중에 카드값에서 빼 주는 할인(청구)</b>인지, 적용 조건까지 확인해요.</div></div></li>
+    <li class="step"><input type="checkbox" id="s5" aria-labelledby="sl5"><div id="sl5"><div class="st">6. 호텔 공식 홈페이지도 보기 <span class="pill p-opt">추가</span> <span class="pill p-q">약 2분</span></div><div class="sd">체인 호텔은 공식 회원가·조식·업그레이드 혜택 때문에 직접 예약이 나을 때가 있어요.</div></div></li>
+    <li class="step"><input type="checkbox" id="s6" aria-labelledby="sl6"><div id="sl6"><div class="st">7. 최종 결제액과 취소 조건 비교 후 예약 <span class="pill p-must">필수</span> <span class="pill p-q">약 2~3분</span></div><div class="sd">세금·수수료·현장에서 내는 돈까지 더한 ‘총액’으로 정해요. 🧮 계산기를 쓰면 쉬워요. 취소 조건이 다르면 무조건 싼 방을 고르지 않아요.</div></div></li>
+    <li class="step"><input type="checkbox" id="s7" aria-labelledby="sl7"><div id="sl7"><div class="st">8. 무료 취소 마감 2~3일 전에 다시 확인 <span class="pill p-opt">추가</span> <span class="pill p-q">약 2분</span></div><div class="sd">⏰ 취소 알림으로 달력에 넣어 두세요. 더 싸졌다면 <b>새 예약을 먼저</b> 확정하고, 그다음 기존 예약을 취소해요.</div></div></li>
+  </ul>
+  <div class="box tip"><b class="t">💡 시간은 얼마나?</b>각 단계 예상 시간을 더하면 약 17분이에요(필수 단계만 약 9~10분). 로그인·접속에 문제가 없다는 가정의 예상치예요.</div>
+</section>
+
+<!-- 3. 계산기 -->
+<section id="calc">
+  <h2><span class="num">3</span>최종 부담액 계산기</h2>
+  <p class="desc">처음 보이는 숫자는 사용법을 보여 주는 <b>가상 예시</b>예요. ‘전체 지우기’ 후 직접 넣으세요. 입력한 값은 이 기기에 자동 저장돼요.</p>
+  <div class="calc-top no-print">
+    <label class="nights">몇 박? <input class="field" type="number" id="nights" min="1" max="60" value="1" inputmode="numeric"> 박 <span class="small">(1~60박 · 가격은 전체 기간 총액으로 입력)</span></label>
+    <div class="btns" style="margin:0">
+      <button class="btn" type="button" id="addOpt">＋ 후보 추가</button>
+      <button class="btn" type="button" id="loadEx">예시 불러오기</button>
+      <button class="btn" type="button" id="clearAll">전체 지우기</button>
+      <button class="btn primary" type="button" id="copyRes">📋 결과 복사</button>
+    </div>
+  </div>
+  <div class="card no-print" id="saveCard">
+    <div class="form" style="align-items:end">
+      <div><label for="saveName">이 비교 저장하기 (이름)</label><input class="field" id="saveName" type="text" maxlength="30" placeholder="예: 도쿄 12월 숙소"></div>
+      <div><button class="btn primary" type="button" id="saveBtn" style="width:100%;justify-content:center">💾 저장</button></div>
+      <div><label for="saveList">저장한 비교 불러오기</label><select class="field" id="saveList"></select></div>
+      <div style="display:flex;gap:6px"><button class="btn" type="button" id="loadBtn" style="flex:1;justify-content:center">불러오기</button><button class="btn" type="button" id="delSaveBtn" style="flex:1;justify-content:center">삭제</button></div>
+    </div>
+    <div class="btns" style="margin-bottom:0"><button class="btn" type="button" id="expBtn">⬇️ 저장본 파일로 내보내기</button><label class="btn" for="impFile" style="cursor:pointer">⬆️ 파일에서 가져오기</label><input type="file" id="impFile" accept="application/json,.json" hidden></div>
+    <p class="small" style="margin:8px 0 0">호텔마다 비교를 따로 저장해 둘 수 있어요(최대 10개, 이 기기에만 저장). 다른 기기로 옮길 때는 파일로 내보낸 뒤 가져오세요.</p>
+  </div>
+  <div class="card tscroll" id="summaryCard"></div>
+  <div class="calc" id="calcBox"></div>
+  <div class="card verdict" id="verdict" aria-live="polite"></div>
+  <div class="box info"><b class="t">📐 계산 방법</b>
+    ① <b>오늘 결제액</b> = 표시 가격(세금 포함) − 즉시 할인(쿠폰·포인트 사용)<br>
+    ② <b>예상 부담액</b> = 오늘 결제액 − 카드 청구 할인 <span class="pill p-warn">‘조건 확인함’만</span> + 현장에서 낼 돈(숙박세 등)<br>
+    ③ <b>혜택 반영 순부담액</b> = 예상 부담액 − 현금성 캐시백 <span class="pill p-warn">‘확실’만</span> − 포인트의 실제 사용 가치<br>
+    순위는 <b>②</b>를 기준으로 정해요. ③은 혜택을 정말 받고 쓸 수 있을 때만 참고해요.</div>
+  <p class="small">예시에서 아고다의 ‘캐시백 확실’에 체크하면 순부담액이 130,000원이 돼요(8번 섹션 예시와 같은 숫자).</p>
+</section>
+
+<!-- 4. 통화 비교 -->
+<section id="fx">
+  <h2><span class="num">4</span>결제 통화 비교 계산기</h2>
+  <p class="desc">해외 사이트가 원화(KRW) 금액과 현지 통화 금액을 함께 보여 줄 때, 어느 쪽이 쌀지 대략 계산해요.</p>
+  <div class="card">
+    <div class="form">
+      <div><label for="fxAmt">현지 통화 금액</label><input class="field" id="fxAmt" type="text" inputmode="decimal" value="20,000"></div>
+      <div><label for="fxRate">환율 (현지 통화 1단위 = ?원)</label><input class="field" id="fxRate" type="text" inputmode="decimal" value="9.5"></div>
+      <div><label for="fxBrand">국제브랜드 수수료 %</label><input class="field" id="fxBrand" type="text" inputmode="decimal" value="1.1"></div>
+      <div><label for="fxSvc">카드사 해외서비스 수수료 %</label><input class="field" id="fxSvc" type="text" inputmode="decimal" value="0.25"></div>
+      <div><label for="fxKrw">사이트가 제시한 원화 금액</label><input class="field" id="fxKrw" type="text" inputmode="numeric" value="195,000"></div>
+    </div>
+    <div class="result" id="fxOut" aria-live="polite"></div>
+    <p class="small" style="margin:10px 0 0">예시 숫자는 가상 값이에요. 수수료율은 카드마다 달라요(예: KB국민 마스터카드 1.1% + 0.25%). 실제 청구는 달러 환산을 거치고 결제·매입 시점 환율이 적용돼 차이가 날 수 있어요. 원화 결제는 해외원화결제(DCC) 수수료가 금액에 이미 들어 있을 수 있어요.</p>
+  </div>
+</section>
+
+<!-- 5. 취소 알림 -->
+<section id="alarm">
+  <h2><span class="num">5</span>무료 취소 마감 알림 만들기</h2>
+  <p class="desc">마감일과 <b>그 시각의 기준 시간대</b>를 넣으면 한국 시각으로 바꿔 보여 주고, 달력에 일정 2개(가격 다시 보기·최종 마감)를 넣을 수 있어요.</p>
+  <div class="card">
+    <div class="form">
+      <div><label for="alHotel">호텔 이름</label><input class="field" id="alHotel" type="text" placeholder="예: 레솔 스테이 아키하바라"></div>
+      <div><label for="alOta">예약한 곳</label><input class="field" id="alOta" type="text" placeholder="예: 부킹닷컴"></div>
+      <div><label for="alDue">무료 취소 마감 (예약 확인서의 날짜·시각)</label><input class="field" id="alDue" type="datetime-local"></div>
+      <div><label for="alTz">그 시각의 기준 시간대</label><select class="field" id="alTz">
+        <option value="Asia/Seoul">한국 (서울)</option>
+        <option value="Asia/Tokyo">일본 (도쿄)</option>
+        <option value="Asia/Shanghai">중국 (베이징·상하이)</option>
+        <option value="Asia/Taipei">대만 (타이베이)</option>
+        <option value="Asia/Hong_Kong">홍콩·마카오</option>
+        <option value="Asia/Bangkok">태국·베트남·캄보디아 (방콕·하노이·다낭·호찌민)</option>
+        <option value="Asia/Manila">필리핀 (마닐라·세부)</option>
+        <option value="Asia/Singapore">싱가포르·말레이시아</option>
+        <option value="Asia/Makassar">인도네시아 발리</option>
+        <option value="Pacific/Guam">괌·사이판</option>
+        <option value="Australia/Sydney">호주 동부 (시드니)</option>
+        <option value="Europe/London">영국 (런던)</option>
+        <option value="Europe/Paris">유럽 중부 (파리·로마·바르셀로나 등)</option>
+        <option value="Europe/Istanbul">튀르키예 (이스탄불)</option>
+        <option value="America/New_York">미국 동부 (뉴욕)</option>
+        <option value="America/Los_Angeles">미국 서부 (LA·샌프란시스코)</option>
+        <option value="Pacific/Honolulu">하와이</option>
+      </select></div>
+      <div><label for="alDays">며칠 전에 가격을 다시 볼까요?</label><select class="field" id="alDays"><option value="2">2일 전</option><option value="3" selected>3일 전</option><option value="5">5일 전</option><option value="7">7일 전</option></select></div>
+    </div>
+    <div class="result" id="alOut" aria-live="polite">마감 날짜·시각을 넣으면 결과가 나와요.</div>
+    <div class="btns">
+      <a class="btn primary" id="alG1" href="#" target="_blank" rel="noopener" aria-disabled="true">🔎 ‘가격 다시 보기’ 구글 캘린더에 추가 ↗</a>
+      <a class="btn primary" id="alG2" href="#" target="_blank" rel="noopener" aria-disabled="true">🚨 ‘최종 마감’ 구글 캘린더에 추가 ↗</a>
+      <button class="btn" type="button" id="alIcs" disabled>📅 두 일정 한 번에 받기 (.ics)</button>
+    </div>
+    <p class="small" style="margin:0">· 마감 시각은 예약 확인서 기준(대부분 호텔 현지 시각)으로 넣고, 시간대를 꼭 맞춰 주세요. 서머타임도 자동으로 반영돼요.<br>· <b>.ics 파일</b>에는 ‘가격 다시 보기’ 시각 알림과 ‘마감 1시간 전’ 알림이 들어 있어요. <b>구글 캘린더</b>에 추가한 뒤에는 알림 설정을 확인해 ‘1시간 전’으로 맞춰 주세요(링크로는 알림 시간이 미리 지정되지 않아요).<br>· 예약번호·카드 정보는 넣지 마세요.</p>
+  </div>
+</section>
+
+<!-- 6. 쉬운 말 -->
+<section id="words" class="detail-only">
+  <h2><span class="num">6</span>어려운 말, 쉽게 풀기</h2>
+  <p class="desc">눌러서 펼쳐 보세요.</p>
+  <details><summary>OTA (온라인 여행사)</summary><div class="dd">호텔 방을 대신 팔아 주는 인터넷 가게예요. 아고다·트립닷컴·부킹닷컴·호텔스닷컴·익스피디아가 여기에 속해요.<div class="ex">비유: 같은 과자를 여러 마트에서 팔면 가게마다 값이 조금씩 다른 것과 같아요.</div></div></details>
+  <details><summary>메타검색 (가격 모아보기)</summary><div class="dd">여러 OTA의 가격을 한 번에 모아 보여 주는 서비스예요. 구글 호텔, 스카이스캐너, 호텔스컴바인, 트리바고, 카약 등이 있어요. 직접 팔지는 않고, 예약은 연결된 사이트에서 해요.<div class="ex">주의: 여기 나온 가격이 결제 금액과 똑같다는 보장은 없어요.</div></div></details>
+  <details><summary>회원가 · Insider Deal · Genius</summary><div class="dd">로그인한 회원에게만 보이는 할인 가격이에요. 아고다는 Insider Deal, 부킹닷컴은 Genius라는 이름을 써요.<div class="ex">그래서 로그아웃(시크릿 모드)만 쓰면 오히려 이 할인을 놓칠 수 있어요.</div></div></details>
+  <details><summary>CID (아고다 주소 속 숫자)</summary><div class="dd">아고다 주소(URL) 안에 있는, ‘어디를 통해 들어왔는지’를 표시하는 번호예요. 할인 쿠폰 번호가 아니에요.<div class="ex">숫자를 아무렇게나 바꾸면 가격이 그대로거나 오히려 비싸질 수도 있어요.</div></div></details>
+  <details><summary>캐시백 · 포인트 적립</summary><div class="dd"><b>캐시백</b>: 결제 뒤 조건을 채우면 나중에 돌려받는 돈. <b>포인트 적립</b>: 그 사이트에서만 다음에 쓸 수 있는 적립금. 둘 다 지금 내는 돈을 줄이지는 않아요.<div class="ex">‘캐시백 적용 후 요금’이라고 적힌 가격은 실제 결제액보다 낮게 보여요.</div></div></details>
+  <details><summary>즉시 할인 vs 청구 할인</summary><div class="dd"><b>즉시 할인</b>: 결제할 때 바로 깎여요. <b>청구 할인</b>: 일단 다 내고, 조건을 채우면 나중에 카드값에서 빼 줘요. 전용 링크·최소 금액·월 한도 같은 조건이 붙는 경우가 많아요.</div></details>
+  <details><summary>DCC (해외원화결제)</summary><div class="dd">해외 가게(해외 사이트 포함)에서 우리 돈 ‘원화’로 계산하게 해 주는 서비스예요. 편해 보이지만 약 3~8% 수수료가 더 붙을 수 있어요.<div class="ex">규칙: 해외 결제에서 원화(KRW)와 현지 돈을 고르라고 하면 → 현지 돈!</div></div></details>
+  <details><summary>무료 취소 · 환불 불가</summary><div class="dd"><b>무료 취소</b>: 정해진 마감일까지는 취소 수수료 없이 취소할 수 있어요. <b>환불 불가</b>: 보통 더 싸지만, 취소하면 돈을 돌려받지 못해요.</div></details>
+  <details><summary>숙박세 · 현장 결제</summary><div class="dd">일부 나라·도시는 호텔에서 따로 세금을 받아요(일본 일부 지역 등). 온라인 가격에 포함됐는지 예약 화면의 ‘현장 지불’ 항목을 확인해요.</div></details>
+</section>
+
+<!-- 7. OTA별 -->
+<section id="ota" class="detail-only">
+  <h2><span class="num">7</span>사이트별 공략법</h2>
+  <p class="desc">“어디가 항상 제일 싸다”는 근거는 없어요. 사이트마다 할인 무기가 달라요. 버튼을 누르거나 ←→ 방향키로 넘겨 보세요.</p>
+  <div class="tabs" role="tablist" aria-label="예약 사이트" id="otaTabs">
+    <button class="tab" role="tab" id="t-agoda" aria-controls="p-agoda" aria-selected="true" tabindex="0">아고다</button>
+    <button class="tab" role="tab" id="t-trip" aria-controls="p-trip" aria-selected="false" tabindex="-1">트립닷컴</button>
+    <button class="tab" role="tab" id="t-booking" aria-controls="p-booking" aria-selected="false" tabindex="-1">부킹닷컴</button>
+    <button class="tab" role="tab" id="t-hotels" aria-controls="p-hotels" aria-selected="false" tabindex="-1">호텔스닷컴</button>
+    <button class="tab" role="tab" id="t-expedia" aria-controls="p-expedia" aria-selected="false" tabindex="-1">익스피디아</button>
+    <button class="tab" role="tab" id="t-direct" aria-controls="p-direct" aria-selected="false" tabindex="-1">호텔 공식</button>
+  </div>
+
+  <div class="card panel" role="tabpanel" id="p-agoda" aria-labelledby="t-agoda">
+    <h3 style="margin-top:0">🟣 아고다 — 회원 혜택 + 들어오는 길 + 캐시백 구분</h3>
+    <div class="flow"><span>로그인 회원가</span><em>→</em><span>앱 쿠폰</span><em>→</em><span>구글 경유</span><em>→</em><span>네이버 경유</span><em>→</em><span>카드사 제휴</span><em>→</em><span>결제액 비교</span></div>
+    <ul>
+      <li><b>회원 등급(VIP)</b>: 등급이 오르면 일부 숙소에서 회원 전용가를 받아요. 등급별 혜택은 바뀔 수 있으니 <b>앱의 내 등급 화면에서 확인</b>하세요.</li>
+      <li><b>Insider Deal</b>: 로그인한 회원에게만 보이는 추가 할인이에요(아고다 공식 파트너 안내). 그래서 로그인 가격은 꼭 봐야 해요.</li>
+      <li><b>쿠폰·프로모션 코드</b>: 할인 페이지에서 받아 적용해요. 넣은 뒤 결제액이 실제로 줄었는지 확인!</li>
+      <li><b>카드사 제휴</b>: 카드사 공식 이벤트 페이지에서 <b>지금 진행 중인</b> 할인을 확인하고, 그 페이지를 통해 들어가요.</li>
+      <li><b>접속 경로</b>: 들어온 길에 따라 가격이 다르게 보일 수 있어요. 단, CID 숫자를 아무렇게나 바꾸는 건 비추천.</li>
+    </ul>
+    <div class="box warn"><b class="t">⚠️ 아고다에서 꼭 구분할 세 가지</b>
+      <b>즉시 할인</b>(결제액이 줄어듦) · <b>캐시백</b>(나중에 조건부로 돌려받음) · <b>AgodaCash</b>(다음 예약에 쓰는 아고다 적립금, 사용처·유효기간 확인)</div>
+    <a class="btn" href="https://www.agoda.com/ko-kr/" target="_blank" rel="noopener">아고다 열기 ↗</a>
+  </div>
+
+  <div class="card panel" role="tabpanel" id="p-trip" aria-labelledby="t-trip" hidden>
+    <h3 style="margin-top:0">🔵 트립닷컴 — 회원가 + 트립코인 + 앱 쿠폰</h3>
+    <div class="flow"><span>로그인 회원가</span><em>→</em><span>앱 쿠폰</span><em>→</em><span>보유 트립코인 사용</span><em>→</em><span>카드 할인</span><em>→</em><span>결제액 확인</span></div>
+    <ul>
+      <li><b>회원 등급</b>: 실버·골드·플래티넘·다이아몬드 등 등급에 따라 적립률과 혜택이 달라요. 로그인 후 내 등급부터 확인해요.</li>
+      <li><b>트립코인</b>: 예약하면 쌓이고 다음 예약에 쓸 수 있어요. 공식 안내 기준 <b>약 100트립코인 = 미화 1달러 상당</b>(선결제 예약에 사용 시). 실제 사용 가능액·유효기간은 결제 화면에서 확인해요.</li>
+      <li><b>쿠폰 체크 5가지</b>: 대상 국가, 최소 결제금액, 최대 할인금액, 결제수단 조건, 다른 할인과 중복 가능 여부.</li>
+    </ul>
+    <div class="box danger"><b class="t">❗ 헷갈리기 쉬운 점</b>이번에 <b>쓰는</b> 코인은 오늘 결제액을 줄이지만, 이번에 <b>쌓일</b> 코인은 오늘 결제액에서 빼면 안 돼요.</div>
+    <a class="btn" href="https://kr.trip.com/" target="_blank" rel="noopener">트립닷컴 열기 ↗</a>
+  </div>
+
+  <div class="card panel" role="tabpanel" id="p-booking" aria-labelledby="t-booking" hidden>
+    <h3 style="margin-top:0">🔷 부킹닷컴 — Genius 등급이 핵심</h3>
+    <div class="tscroll"><table class="wide">
+      <tr><th>등급</th><th>할인(참여 숙소)</th><th>올리는 조건</th><th>추가 혜택</th></tr>
+      <tr><td>Level 1</td><td>10%</td><td>무료 가입 후 로그인</td><td>-</td></tr>
+      <tr><td>Level 2</td><td>10~15%</td><td>2년 안에 숙박 5건 완료</td><td>일부 숙소 무료 조식·객실 업그레이드</td></tr>
+      <tr><td>Level 3</td><td>10~20%</td><td>2년 안에 적격 예약 15건 완료</td><td>+ 우선 고객지원</td></tr>
+    </table></div>
+    <ul>
+      <li>할인은 <b>참여하는 숙소</b>에서만, 세금·수수료를 뺀 객실 요금에 적용돼요. 모든 숙소가 10~20%라는 뜻이 아니에요.</li>
+      <li>Level 3 조건·혜택은 공식 페이지에서 국가별로 다르게 보일 수 있어요. 앱의 Genius 화면에서 내 등급을 확인하세요.</li>
+      <li>앱·모바일에서만 보이는 특가가 있을 수 있어요.</li>
+      <li>현장 결제 상품도 있으므로 환율 변동과 결제 통화(💳 10번)에 주의해요.</li>
+    </ul>
+    <div class="box tip"><b class="t">💡 조식까지 계산하기</b>아고다 140,000원(조식 없음·환불 불가) vs 부킹닷컴 145,000원(조식 2인·무료 취소)이라면, 조식을 실제로 먹고 일정이 바뀔 수 있는 사람에겐 부킹닷컴이 더 유리할 수 있어요.</div>
+    <a class="btn" href="https://www.booking.com/" target="_blank" rel="noopener">부킹닷컴 열기 ↗</a>
+  </div>
+
+  <div class="card panel" role="tabpanel" id="p-hotels" aria-labelledby="t-hotels" hidden>
+    <h3 style="margin-top:0">🔴 호텔스닷컴 — 내 계정의 보상 방식부터 확인</h3>
+    <ul>
+      <li><b>가장 중요한 건 내 계정에서 실제로 받는 혜택</b>이에요. 로그인 후 회원가와 보상 화면을 먼저 확인해요.</li>
+      <li>참고: 예전 ‘10박 하면 1박 보상’ 방식은 2023년 미국에서 익스피디아·호텔스닷컴·브르보(Vrbo) 통합 보상(One Key)으로 바뀌었어요. 한국 계정 적용 방식은 이 가이드에서 확정하지 못했어요.</li>
+      <li>할인코드는 적용 제외 숙소·브랜드가 있을 수 있으니 코드 조건을 확인하세요.</li>
+    </ul>
+    <div class="box info"><b class="t">🧭 원칙</b>앞으로 쓸지 모르는 적립보다 <b>오늘 결제액</b>을 먼저 비교해요.</div>
+    <a class="btn" href="https://kr.hotels.com/" target="_blank" rel="noopener">호텔스닷컴 열기 ↗</a>
+  </div>
+
+  <div class="card panel" role="tabpanel" id="p-expedia" aria-labelledby="t-expedia" hidden>
+    <h3 style="margin-top:0">🟡 익스피디아 — 회원가 + 항공·호텔 묶음 비교</h3>
+    <ul>
+      <li>로그인하면 보이는 회원 전용가를 먼저 확인해요.</li>
+      <li>비행기와 호텔을 둘 다 예약한다면 두 가지를 비교해요.<br>A. 항공권 따로 + 호텔 따로 &nbsp;/&nbsp; B. 항공·호텔 묶음 상품</li>
+      <li>묶음이 더 쌀 수 있지만 취소·변경이 까다로울 수 있어요. 일정이 바뀔 수 있으면 따로 예약하는 유연성도 값어치가 있어요.</li>
+    </ul>
+    <a class="btn" href="https://www.expedia.co.kr/" target="_blank" rel="noopener">익스피디아 열기 ↗</a>
+  </div>
+
+  <div class="card panel" role="tabpanel" id="p-direct" aria-labelledby="t-direct" hidden>
+    <h3 style="margin-top:0">🏨 호텔 공식 홈페이지 — 직접 예약 혜택</h3>
+    <ul>
+      <li>특히 체인 호텔: 공식 회원가, 무료 조식, 객실 업그레이드, 레이트 체크아웃, 호텔 포인트, 장기 숙박 할인.</li>
+      <li>OTA보다 조금 비싸도 혜택 가치가 더 크면 좋은 선택이에요.</li>
+      <li>방 배정·초과 예약 같은 문제가 생겼을 때 호텔과 바로 해결하기 쉬운 편이에요.</li>
+      <li>단, 직접 예약이 항상 가장 싸거나 변경이 쉬운 건 아니에요. 요금제 조건을 확인해요.</li>
+    </ul>
+  </div>
+
+  <h3>한눈에 비교</h3>
+  <div class="card tscroll"><table class="wide">
+    <tr><th>사이트</th><th>할인 무기</th><th>꼭 확인할 것</th></tr>
+    <tr><td>아고다</td><td>회원 등급·Insider Deal·앱 쿠폰·제휴 경로</td><td>캐시백 뺀 가격인지</td></tr>
+    <tr><td>트립닷컴</td><td>회원 등급·트립코인·쿠폰</td><td>지금 쓸 수 있는 코인만 반영</td></tr>
+    <tr><td>부킹닷컴</td><td>Genius 10~20%(참여 숙소)</td><td>조식·무료 취소·현장 결제</td></tr>
+    <tr><td>호텔스닷컴</td><td>회원가·보상 프로그램</td><td>한국 계정의 보상 조건</td></tr>
+    <tr><td>익스피디아</td><td>회원가·항공+호텔 묶음</td><td>묶음 상품 취소 조건</td></tr>
+    <tr><td>호텔 공식</td><td>직접 예약 혜택</td><td>조식·포인트·추가 서비스</td></tr>
+  </table></div>
+  <div class="box warn"><b class="t">🗂️ 사이트를 너무 여러 곳 쓰지 않기</b>최저가만 쫓아 매번 다른 곳에서 예약하면 어디에서도 등급·포인트가 쌓이지 않아요. 자주 쓰는 곳 2~3개로 정하고 나머지는 가격 비교용으로 쓰는 게 실용적이에요.</div>
+</section>
+
+<!-- 8. 할인 종류 -->
+<section id="discount" class="detail-only">
+  <h2><span class="num">8</span>할인처럼 보여도 다 같은 할인이 아니에요</h2>
+  <p class="desc">이걸 섞어 계산하면 “최저가”를 잘못 고르게 돼요. 🧮 계산기가 이 구분대로 계산해요.</p>
+  <div class="card tscroll"><table class="wide">
+    <tr><th>종류</th><th>실제 의미</th><th>계산할 때</th></tr>
+    <tr><td><b>즉시 할인</b></td><td>결제 전에 금액이 줄어요</td><td>오늘 결제액에 반영</td></tr>
+    <tr><td><b>프로모션 코드</b></td><td>대상 예약에 할인 적용</td><td>넣은 뒤 결제액 재확인</td></tr>
+    <tr><td><b>포인트 사용</b></td><td>가진 포인트로 결제액 감소</td><td>쓸 수 있는 금액만 반영</td></tr>
+    <tr><td><b>청구 할인</b></td><td>결제 후 카드값에서 빼 줌</td><td>조건을 확인한 것만 반영</td></tr>
+    <tr><td><b>캐시백</b></td><td>나중에 조건부로 돌려받음</td><td>확실할 때만 참고</td></tr>
+    <tr><td><b>포인트 적립</b></td><td>그 사이트에서 다음에 쓸 수 있음</td><td>오늘 결제액과 분리, 실제 사용 가치로만</td></tr>
+  </table></div>
+  <h3>예시로 이해하기</h3>
+  <div class="card tscroll"><table class="wide">
+    <tr><th></th><th class="n">아고다</th><th class="n">트립닷컴</th><th class="n">부킹닷컴</th></tr>
+    <tr><td>표시 가격</td><td class="n">150,000원</td><td class="n">148,000원</td><td class="n">145,000원</td></tr>
+    <tr><td>즉시 할인</td><td class="n">없음</td><td class="n">5,000원</td><td class="n">없음</td></tr>
+    <tr><td><b>오늘 결제액</b></td><td class="n">150,000원</td><td class="n"><b>143,000원</b></td><td class="n">145,000원</td></tr>
+    <tr><td>카드 청구 할인(조건 확인함)</td><td class="n">없음</td><td class="n">없음</td><td class="n">5,000원</td></tr>
+    <tr><td><b>예상 부담액</b></td><td class="n">150,000원</td><td class="n">143,000원</td><td class="n"><b>140,000원</b></td></tr>
+    <tr><td>나중 캐시백</td><td class="n">20,000원</td><td class="n">없음</td><td class="n">없음</td></tr>
+    <tr><td>캐시백까지 확실히 받으면</td><td class="n"><b>130,000원</b></td><td class="n">143,000원</td><td class="n">140,000원</td></tr>
+  </table></div>
+  <div class="box info"><b class="t">🧠 읽는 법</b>오늘 가장 적게 내는 곳은 <b>트립닷컴</b>, 조건을 확인한 할인까지 보면 <b>부킹닷컴</b>, 캐시백을 확실히 받는다면 <b>아고다</b>가 유리해요. 받을지 확실하지 않은 혜택은 할인으로 치지 않는 게 안전해요.</div>
+</section>
+
+<!-- 9. 재예약 -->
+<section id="rebook" class="detail-only">
+  <h2><span class="num">9</span>무료 취소 후 다시 예약하기</h2>
+  <p class="desc">예약 뒤에 값이 내려가면 다시 잡는 방법이에요. 값이 꼭 내려간다는 뜻은 아니에요.</p>
+  <div class="card">
+    <ul class="tl">
+      <li><b>① 무료 취소 가능한 객실 예약</b>취소 마감 날짜·시각을 ⏰ 취소 알림으로 달력에 넣어요.</li>
+      <li><b>② 예약 후 가끔 가격 확인</b>같은 방·같은 조건으로 비교해요.</li>
+      <li><b>③ 취소 마감 2~3일 전 다시 확인</b>기준은 출발일이 아니라 <b>취소 마감일</b>이에요.</li>
+      <li><b>④ 더 싸면 새 예약 먼저</b>새 예약이 확정됐는지 확인해요.</li>
+      <li><b>⑤ 그다음 기존 예약 취소</b>아직 무료 취소 상태인지 다시 확인하고 취소해요.</li>
+    </ul>
+  </div>
+  <div class="box warn"><b class="t">⚠️ 주의할 점</b>
+    · 취소 마감이 지나면 쓸 수 없어요.<br>
+    · 환율이 바뀌면 원화 환불액이 달라질 수 있고, 카드 취소·환불은 며칠 걸릴 수 있어요.<br>
+    · 기존 예약에 걸려 있던 캐시백·쿠폰·등급 실적이 취소와 함께 사라질 수 있어요.<br>
+    · 순서를 바꿔 먼저 취소하면 그 사이 방이 없어질 수 있어요.</div>
+</section>
+
+<!-- 10. 결제 통화 -->
+<section id="pay" class="detail-only">
+  <h2><span class="num">10</span>해외 결제 통화: 원화(KRW) 함정</h2>
+  <p class="desc">가장 돈이 새기 쉬운 곳이에요. 상황에 따라 행동이 달라요.</p>
+  <div class="card tscroll"><table class="wide">
+    <tr><th>상황</th><th>이렇게 하세요</th></tr>
+    <tr><td><b>호텔 현장 단말기</b>가 원화와 현지 통화를 고르라고 할 때</td><td><b>현지 통화</b>를 고르세요. 원화를 고르면 DCC 수수료가 붙을 수 있어요.</td></tr>
+    <tr><td><b>해외 예약 사이트</b>가 원화 총액과 외화 총액을 함께 보여 줄 때</td><td><b>실제 청구 통화</b>를 결제 직전 화면에서 확인하고, 💱 통화 비교 계산기로 비교해요.</td></tr>
+    <tr><td>원화로만 결제할 수 있는 화면일 때</td><td>원화 총액을 다른 사이트의 현지 통화 가격과 비교한 뒤 결정해요.</td></tr>
+  </table></div>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">DCC가 뭐예요?</h3>
+      <p>해외 가게가 우리 돈(원화)으로 계산해 주는 서비스예요. 편해 보이지만, 해외 가맹점이 이용금액의 <b>약 3~8%</b>를 추가 수수료로 붙일 수 있어요(KB국민카드 안내).</p>
+      <p class="small" style="margin:0">예) 일본 호텔 단말기에 <b>JPY 20,000</b> / <b>KRW 190,000</b>이 같이 뜨면 → JPY 선택 (숫자는 가상 예시)</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">해외 예약 사이트도 해당돼요</h3>
+      <p>금융감독원은 <b>해외 숙박 예약 사이트</b>를 해외원화결제가 되는 대표적인 곳으로 꼽고, 원화로 결제되지 않도록 확인하라고 안내했어요.</p>
+      <p class="small" style="margin:0">화면에 보이는 통화(표시 통화)와 실제로 청구되는 통화가 다를 수 있어요. 결제 직전 화면을 꼭 확인해요.</p>
+    </div>
+  </div>
+  <h3>실전 순서</h3>
+  <ol>
+    <li>여행 전 카드사 앱에서 <b>해외원화결제(DCC) 차단</b>을 켜요.</li>
+    <li>예약 사이트의 통화를 <b>현지 통화</b>(일본이면 엔화)로 바꿔 금액을 확인해요.</li>
+    <li>결제가 <b>거절</b>되면 차단을 풀기 전에, 결제 통화를 현지 통화로 바꿔 다시 시도해요.</li>
+    <li>현지 통화 선택지가 아예 없다면 💱 계산기로 비교한 뒤 원화 결제 여부를 결정해요.</li>
+  </ol>
+  <div class="box warn"><b class="t">⚠️ 이것도 주의</b>일본 호텔을 미국 달러(USD)로 결제하면 환전이 한 번 더 일어나 손해일 수 있어요. 기본은 ‘그 나라 돈’이에요.</div>
+</section>
+
+<!-- 11. 조건 맞추기 -->
+<section id="match" class="detail-only">
+  <h2><span class="num">11</span>비교 전에 똑같이 맞출 10가지</h2>
+  <p class="desc">조건이 다르면 싼 게 싼 게 아니에요.</p>
+  <div class="card tscroll"><table>
+    <tr><th>항목</th><th>왜 중요해요?</th></tr>
+    <tr><td>호텔 이름</td><td>이름이 비슷한 다른 숙소일 수 있어요</td></tr>
+    <tr><td>체크인·체크아웃</td><td>날짜마다 값이 달라요</td></tr>
+    <tr><td>투숙 인원</td><td>1인으로 예약하고 2인이 묵으면 추가 요금·입실 분쟁이 생길 수 있어요</td></tr>
+    <tr><td>객실 종류</td><td>싱글·더블·트윈·전망에 따라 값이 달라요</td></tr>
+    <tr><td>조식</td><td>포함 여부에 따라 실제 가치가 달라요</td></tr>
+    <tr><td>무료 취소</td><td>일정이 바뀔 때 손실 차이가 커요</td></tr>
+    <tr><td>세금·수수료</td><td>표시 가격과 결제액이 달라질 수 있어요</td></tr>
+    <tr><td>현장 결제 항목</td><td>숙박세 등 호텔에서 따로 내는 돈</td></tr>
+    <tr><td>결제 통화</td><td>원화 결제 수수료(10번 참고)</td></tr>
+    <tr><td>쿠폰 조건</td><td>대상·최대 할인액이 달라요</td></tr>
+  </table></div>
+  <div class="box tip"><b class="t">💡 날짜를 조금 바꿔 보기</b>주말·공휴일·축제 기간은 값이 크게 뛰어요. 하루만 앞뒤로 바꿔도 총액이 달라질 수 있어요. 연박 할인은 ‘1박 평균가’가 낮아지는 것이지 총액이 줄어드는 게 아니니 둘을 구분해요(계산기의 ‘몇 박?’ 칸을 채우면 1박 평균이 나와요).</div>
+</section>
+
+<!-- 12. 최저가 보장 -->
+<section id="guarantee" class="detail-only">
+  <h2><span class="num">12</span>최저가 보장 제도</h2>
+  <p class="desc">예약 뒤 다른 곳이 더 싸면 차액을 보상받을 수 있는 제도예요. 조건이 매우 까다로워요.</p>
+  <div class="card tscroll"><table class="wide">
+    <tr><th>사이트</th><th>제도</th><th>주의</th></tr>
+    <tr><td>아고다</td><td>Best Price Guarantee</td><td>완전히 같은 조건만 인정. 카드 할인·캐시백·일부 회원가는 제외될 수 있고, 보상이 AgodaCash일 수 있음</td></tr>
+    <tr><td>부킹닷컴</td><td>We Price Match</td><td>로그인 전용가·로열티·쿠폰 할인은 제외될 수 있음</td></tr>
+    <tr><td>트립닷컴</td><td>일부 가격 보장 정책</td><td>대상 상품·지역 제한, 보상이 트립코인일 수 있음</td></tr>
+  </table></div>
+  <div class="box warn"><b class="t">⚠️ 같아야 하는 것</b>호텔·객실·날짜·인원·취소 조건·포함 혜택·세금 포함 최종가, 그리고 실제로 예약 가능한 가격이어야 해요. 세부 조건은 이 가이드에서 원문으로 확정하지 못했으니, 신청할 때 해당 사이트의 최신 약관을 꼭 확인하세요. <b>이 제도를 믿고 처음부터 비싸게 예약하는 건 비추천</b>이에요.</div>
+</section>
+
+<!-- 13. 사례 검증 -->
+<section id="case" class="detail-only">
+  <h2><span class="num">13</span>사례 검증: “15만 7천 원이 12만 6천 원으로?”</h2>
+  <p class="desc">인터넷에 퍼진 ‘시크릿 모드·쿠키 삭제·CID 변경·아고다 스캐너’ 게시글(원 게시 2025년 6월, 2025년 2월 투숙 화면)을 숫자로 따져 봤어요. 아래 캐시백 금액은 <b>스크린샷 판독값</b>이라 실제 카드 결제액으로 확정할 수 없어요.</p>
+  <div class="card tscroll"><table class="wide">
+    <tr><th>방법</th><th class="n">화면 표시 가격</th><th class="n">처음 대비</th><th>메모(판독값 기준)</th></tr>
+    <tr><td>처음 검색</td><td class="n">157,278원</td><td class="n">-</td><td>옆에 ‘₩67,245 적용됨’ 표시 → 캐시백 뺀 가격일 수 있음</td></tr>
+    <tr><td>쿠키 삭제 후</td><td class="n">144,264원</td><td class="n">−13,014원</td><td>캐시백 70,554원을 뺀 표시로 보임</td></tr>
+    <tr><td>CID 변경 후</td><td class="n">141,680원</td><td class="n">−15,598원</td><td>캐시백 31,202원을 뺀 표시로 보임</td></tr>
+    <tr><td>아고다 스캐너</td><td class="n">126,420원</td><td class="n">−30,858원</td><td>캐시백 표시 없음 → 그대로 결제액일 수 있음</td></tr>
+  </table></div>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">🧮 계산 1: 표시 가격만 보면</h3>
+      <p>30,858 ÷ 157,278 × 100 ≈ <b>19.6%</b> 싸 보여요.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">🧮 계산 2: 캐시백 빼기 전으로 보면</h3>
+      <p>144,264 + 70,554 = <b>214,818원</b><br>141,680 + 31,202 = <b>172,882원</b><br>차이 = <b>41,936원</b> (표시 가격 차이는 2,584원뿐)</p>
+    </div>
+  </div>
+  <div class="box danger"><b class="t">🔎 결론</b>
+    ① 기준이 섞여 있어요: 캐시백 뺀 가격과 그냥 결제액을 나란히 비교했어요.<br>
+    ② 방이 달라요: <b>싱글룸(금연)</b> vs <b>세미더블룸·시티뷰(금연)</b>, 무료 취소 기한도 달라요.<br>
+    ③ 같은 호텔인지 불분명: 스캐너 화면의 ‘최근 검색한 호텔’은 다른 호텔(오사카)이고, 마지막 화면엔 호텔 이름이 안 보여요.<br>
+    → <b>가격이 바뀐 건 맞지만, 같은 방을 19.6% 싸게 예약했다고는 확인할 수 없어요.</b></div>
+  <h3>그래서 그 방법들은?</h3>
+  <div class="card tscroll"><table class="wide">
+    <tr><th>방법</th><th>판정</th><th>이렇게 쓰세요</th></tr>
+    <tr><td>시크릿 모드</td><td><span class="pill p-warn">비교용</span></td><td>로그인 가격과 한 번만 비교. 로그아웃하면 회원가를 놓칠 수 있어요.</td></tr>
+    <tr><td>쿠키 삭제</td><td><span class="pill p-no">대부분 불필요</span></td><td>크롬 시크릿 모드는 기본으로 서드파티 쿠키를 막아요. 반복 삭제는 시간 낭비.</td></tr>
+    <tr><td>Do Not Track 켜기</td><td><span class="pill p-no">효과 없음</span></td><td>많은 사이트가 이 요청을 받아도 동작을 바꾸지 않아요. 할인과 무관.</td></tr>
+    <tr><td>CID 무작위 변경</td><td><span class="pill p-no">비추천</span></td><td>가격이 그대로거나 더 비싸질 수 있어요. 대신 구글·네이버·카드사 경유로 비교.</td></tr>
+    <tr><td>외부 스캐너</td><td><span class="pill p-warn">주의</span></td><td>운영자 불명 서비스에 로그인·카드 정보 입력 금지. 확장 프로그램은 권한 확인.</td></tr>
+  </table></div>
+</section>
+
+<!-- 14. OX -->
+<section id="ox" class="detail-only">
+  <h2><span class="num">14</span>소문 vs 사실 판정표</h2>
+  <div class="card tscroll"><table class="wide">
+    <tr><th>주장</th><th>판정</th></tr>
+    <tr><td>OTA마다 같은 호텔 가격이 다를 수 있다</td><td><span class="pill p-ok">✅ 사실</span></td></tr>
+    <tr><td>들어오는 길(경로)에 따라 가격이 다를 수 있다</td><td><span class="pill p-ok">✅ 사실</span></td></tr>
+    <tr><td>CID 변경 후 표시 가격이 달라진 사례가 있다</td><td><span class="pill p-ok">✅ 사례 있음</span></td></tr>
+    <tr><td>CID 숫자가 특정 할인율을 정해 준다</td><td><span class="pill p-warn">⚠️ 근거 확인 안 됨</span></td></tr>
+    <tr><td>CID만 바꾸면 늘 싸진다</td><td><span class="pill p-warn">⚠️ 재현성 낮음</span></td></tr>
+    <tr><td>시크릿 모드가 항상 더 싸다</td><td><span class="pill p-no">❌ 사실 아님</span></td></tr>
+    <tr><td>쿠키를 지우면 신규 고객 할인이 보장된다</td><td><span class="pill p-no">❌ 근거 확인 안 됨</span></td></tr>
+    <tr><td>로그인 회원 전용가가 있다(아고다 Insider Deal·부킹닷컴 Genius)</td><td><span class="pill p-ok">✅ 공식 확인</span></td></tr>
+    <tr><td>트립코인을 다음 예약 할인에 쓸 수 있다</td><td><span class="pill p-ok">✅ 공식 확인</span></td></tr>
+    <tr><td>부킹닷컴 Genius 할인은 모든 숙소에 적용된다</td><td><span class="pill p-no">❌ 참여 숙소만</span></td></tr>
+    <tr><td>호텔스닷컴 보상 방식은 나라마다 다를 수 있다</td><td><span class="pill p-ok">✅ 미국 One Key 확인</span></td></tr>
+    <tr><td>해외 사이트에서 원화로 결제하면 추가 수수료 위험이 있다</td><td><span class="pill p-ok">✅ 사실</span></td></tr>
+    <tr><td>카드 할인과 회원 할인은 항상 중복된다</td><td><span class="pill p-no">❌ 보장 안 됨</span></td></tr>
+    <tr><td>아고다 스캐너가 최저가를 보장한다</td><td><span class="pill p-q">❓ 검증 안 됨</span></td></tr>
+    <tr><td>무료 취소 후 더 싸게 다시 예약할 수 있다</td><td><span class="pill p-ok">✅ 조건 충족 시</span></td></tr>
+    <tr><td><b>같은 조건의 최종 결제액을 비교해야 한다</b></td><td><span class="pill p-ok">✅ 핵심 원칙</span></td></tr>
+  </table></div>
+  <div class="box info"><b class="t">🎯 마지막 한마디</b><b>최저가와 최선의 예약은 달라요.</b> 취소 가능 여부, 조식, 결제 조건, 고객지원까지 보면 몇천 원 비싼 예약이 더 나을 때가 있어요.</div>
+</section>
+
+<!-- 15. 출처 -->
+<section id="src" class="detail-only">
+  <h2><span class="num">15</span>출처와 확인 상태</h2>
+  <div class="card">
+    <h3 style="margin-top:0">공식·공공 자료</h3>
+    <ul class="src">
+      <li><a href="https://www.booking.com/genius.html" target="_blank" rel="noopener">부킹닷컴 Genius 안내</a> — Level 1 10%, Level 2 10~15%·2년 내 숙박 5건 확인</li>
+      <li><a href="https://www.trip.com/customer/loyalty" target="_blank" rel="noopener">트립닷컴 멤버십·트립코인</a> — 등급명, 100코인 ≈ 1달러 확인</li>
+      <li><a href="https://partnerhub.agoda.com/what-is-agoda-private-sale/" target="_blank" rel="noopener">아고다 Private Sale(Insider Deal) 파트너 안내</a> — 로그인 회원 대상 확인</li>
+      <li><a href="https://www.etoday.co.kr/news/view/2386388" target="_blank" rel="noopener">금융감독원 “해외 가맹점에선 현지통화 결제가 유리” (이투데이, 2024.8.1)</a></li>
+      <li><a href="https://m.kbcard.com/CXHIASVCD0027.cms" target="_blank" rel="noopener">KB국민카드 해외원화결제(DCC) 유의사항</a></li>
+      <li><a href="https://docs.channel.io/gowid-guide/ko/articles/KB%EA%B5%AD%EB%AF%BC-%ED%95%B4%EC%99%B8-%EA%B2%B0%EC%A0%9C-%EC%9D%B4%EC%9A%A9-%EB%B0%A9%EB%B2%95-c8d516c3" target="_blank" rel="noopener">KB국민 해외 결제 수수료 안내 (마스터카드 1.1% + 0.25%)</a></li>
+      <li><a href="https://kbthink.com/life/card/dcc-block.html" target="_blank" rel="noopener">해외 원화 결제 차단과 해제 방법 (KB Think)</a></li>
+    </ul>
+    <h3>이용 사례·보조 자료</h3>
+    <ul class="src">
+      <li><a href="https://news.hada.io/topic?id=25655" target="_blank" rel="noopener">아고다 CID 경로 비교 도구 개발기 (GeekNews)</a></li>
+      <li><a href="https://brunch.co.kr/@choicemon/64" target="_blank" rel="noopener">아고다 할인 구조 정리 (브런치)</a></li>
+      <li><a href="https://www.theteams.kr/profile/204845/post/56342" target="_blank" rel="noopener">부킹닷컴 할인 정리 (더팀스)</a></li>
+    </ul>
+    <h3>확인 상태</h3>
+    <ul>
+      <li><span class="pill p-ok">계산 확인</span> 19.6% · 2,584원 · 41,936원 · 예시표 금액 모두 재계산 일치</li>
+      <li><span class="pill p-ok">공식 확인</span> Genius Level 1·2, 트립코인 환산, Insider Deal 로그인 대상, 해외원화결제 수수료·차단</li>
+      <li><span class="pill p-warn">각 사이트에서 재확인</span> 아고다 VIP 등급별 혜택, Genius Level 3 세부 조건, 각 사이트 최저가 보장 세부 조건, 호텔스닷컴 한국 계정 보상 방식</li>
+    </ul>
+    <p class="small" style="margin:8px 0 0">할인 정책은 자주 바뀌어요. 예약 직전 결제 화면이 가장 정확한 정보예요.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">호텔 최저가 예약 가이드 v3.1 · 2026년 10월 10일 기준 · 정보 제공용이며 각 사이트의 최신 약관이 우선합니다.</div>
+</footer>
+<a class="toplink no-print" href="#top" aria-label="맨 위로">↑</a>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  'use strict';
+  var NS='hotelGuide:v3:';
+  function sget(k){try{return localStorage.getItem(NS+k)}catch(e){return null}}
+  function sset(k,v){try{localStorage.setItem(NS+k,v)}catch(e){}}
+  function sjson(k,fb){var r=sget(k);if(!r)return fb;try{var o=JSON.parse(r);return (o&&typeof o==='object')?o:fb}catch(e){return fb}}
+  var $=function(id){return document.getElementById(id)};
+  function el(tag,attrs,text){var e=document.createElement(tag);if(attrs)for(var k in attrs){if(k==='class')e.className=attrs[k];else e.setAttribute(k,attrs[k]);}if(text!=null)e.textContent=text;return e}
+  function num(v){var s=String(v==null?'':v).replace(/[^0-9]/g,'');var n=s?parseInt(s,10):0;return isFinite(n)?n:0}
+  function dec(v){var s=String(v==null?'':v).replace(/[^0-9.,]/g,'');if(decAmbiguous(s))return NaN;s=s.replace(/,/g,'');if((s.match(/\./g)||[]).length>1)return NaN;var n=parseFloat(s);return isFinite(n)?n:0}
+  /* 9,5 처럼 쉼표가 소수점으로 쓰였을 수 있는 입력: 천 단위(쉼표 뒤 정확히 3자리)가 아니면 모호 */
+  function decAmbiguous(s){if(s.indexOf(',')<0)return false;var parts=s.split('.')[0].split(',');for(var i=1;i<parts.length;i++)if(parts[i].length!==3)return true;return false}
+  function won(n){return Math.round(n).toLocaleString('ko-KR')+'원'}
+  function comma(n){return n?n.toLocaleString('ko-KR'):''}
+  function josa(w,a,b){var c=w.charCodeAt(w.length-1);if(c<0xAC00||c>0xD7A3)return w+a+'('+b+')';return w+(((c-0xAC00)%28)?a:b)}
+  var toastT;function toast(m){var t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},1800)}
+
+  /* 테마 */
+  var root=document.documentElement;
+  $('themeBtn').addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    var dark=cur?cur==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var next=dark?'light':'dark';root.setAttribute('data-theme',next);sset('theme',next);
+  });
+
+  /* 간단/자세히 보기 */
+  var modeBtn=$('modeBtn');
+  function applyMode(){var s=root.getAttribute('data-mode')==='simple';modeBtn.setAttribute('aria-pressed',s?'true':'false');modeBtn.textContent=s?'📖 자세히 보기':'⚡ 간단 보기';updateFade();}
+  modeBtn.addEventListener('click',function(){
+    var s=root.getAttribute('data-mode')==='simple';
+    if(s)root.removeAttribute('data-mode');else root.setAttribute('data-mode','simple');
+    sset('mode',s?'full':'simple');applyMode();
+  });
+
+  /* 목차 오른쪽 흐림 표시 */
+  var tocS=$('tocScroll'),fade=$('tocFade');
+  function updateFade(){fade.classList.toggle('hide',tocS.scrollLeft+tocS.clientWidth>=tocS.scrollWidth-4)}
+  tocS.addEventListener('scroll',updateFade,{passive:true});window.addEventListener('resize',updateFade);
+  applyMode();
+
+  /* 빠른 검색 */
+  function q(){return $('qName').value.trim()}
+  $('qForm').addEventListener('submit',function(e){e.preventDefault();var v=q();if(!v){toast('호텔 이름을 먼저 넣어 주세요');return}window.open('https://www.google.com/search?q='+encodeURIComponent(v+' 호텔'),'_blank','noopener')});
+  $('qNaver').addEventListener('click',function(){var v=q();if(!v){toast('호텔 이름을 먼저 넣어 주세요');return}window.open('https://search.naver.com/search.naver?query='+encodeURIComponent(v),'_blank','noopener')});
+
+  /* 체크리스트: change 이벤트로 저장 (마우스·터치·키보드 공통) */
+  var steps=[].slice.call(document.querySelectorAll('#stepList .step'));
+  var st=sjson('steps',{});
+  function render(){
+    var n=0;
+    steps.forEach(function(li,i){var cb=li.querySelector('input');cb.checked=!!st[i];li.classList.toggle('done',cb.checked);if(cb.checked)n++;});
+    $('progText').textContent=n+' / '+steps.length+' 완료'+(n===steps.length?' 🎉':'');
+    $('progBar').style.width=(n/steps.length*100)+'%';
+  }
+  steps.forEach(function(li,i){
+    var cb=li.querySelector('input');
+    cb.addEventListener('change',function(){st[i]=cb.checked;sset('steps',JSON.stringify(st));render();});
+    li.addEventListener('click',function(e){if(e.target===cb)return;if(e.target.closest('a'))return;cb.checked=!cb.checked;cb.dispatchEvent(new Event('change'));});
+  });
+  $('resetSteps').addEventListener('click',function(){st={};sset('steps','{}');render();});
+  render();
+
+  /* 탭: 클릭 + 방향키 */
+  var tabs=[].slice.call(document.querySelectorAll('#otaTabs .tab'));
+  function selectTab(t,focus){
+    tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on?'true':'false');x.tabIndex=on?0:-1;$(x.getAttribute('aria-controls')).hidden=!on;});
+    if(focus)t.focus();
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){selectTab(t)});
+    t.addEventListener('keydown',function(e){
+      var j=null;
+      if(e.key==='ArrowRight')j=(i+1)%tabs.length;else if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;else if(e.key==='Home')j=0;else if(e.key==='End')j=tabs.length-1;
+      if(j!==null){e.preventDefault();selectTab(tabs[j],true)}
+    });
+  });
+
+  /* 인쇄: 접힌 설명·숨은 탭 모두 펼치기 */
+  var reopen=[];
+  window.addEventListener('beforeprint',function(){reopen=[];document.querySelectorAll('details:not([open])').forEach(function(d){d.open=true;reopen.push(d)})});
+  window.addEventListener('afterprint',function(){reopen.forEach(function(d){d.open=false});reopen=[]});
+
+  /* ===== 부담액 계산기 ===== */
+  var MAX=6, MIN=1;
+  var EXAMPLE={nights:1,opts:[
+    {name:'아고다',plat:'agoda',price:150000,inst:0,bill:0,billOk:false,site:0,cash:20000,cashOk:false,pts:0,free:false,bf:false},
+    {name:'트립닷컴',plat:'trip',price:148000,inst:5000,bill:0,billOk:false,site:0,cash:0,cashOk:false,pts:0,free:true,bf:false},
+    {name:'부킹닷컴',plat:'booking',price:145000,inst:0,bill:5000,billOk:true,site:0,cash:0,cashOk:false,pts:0,free:true,bf:false}
+  ]};
+  function blank(i){return {name:'후보 '+(i+1),plat:'',price:0,inst:0,bill:0,billOk:false,site:0,cash:0,cashOk:false,pts:0,free:false,bf:false}}
+  function clone(o){return JSON.parse(JSON.stringify(o))}
+  var state=sjson('calc',null);
+  if(!state||!Array.isArray(state.opts)||!state.opts.length)state=clone(EXAMPLE);
+  state.opts=state.opts.slice(0,MAX);
+  var box=$('calcBox');
+  var MONEY=[['price','표시 가격 (세금·수수료 포함 총액)'],['inst','즉시 할인 (쿠폰·포인트 사용)'],['bill','카드 청구 할인 (나중에 빼 줌)'],['site','현장에서 낼 돈 (숙박세 등)'],['cash','현금성 캐시백 (나중에 받음)'],['pts','포인트·적립의 실제 사용 가치 (안 쓸 거면 0)']];
+  var PLATS=[['','예약처 선택(선택 사항)',''],['agoda','아고다','https://www.agoda.com/ko-kr/'],['trip','트립닷컴','https://kr.trip.com/'],['booking','부킹닷컴','https://www.booking.com/'],['hotels','호텔스닷컴','https://kr.hotels.com/'],['expedia','익스피디아','https://www.expedia.co.kr/'],['official','호텔 공식 홈페이지',''],['etc','기타','']];
+  function platUrl(k){for(var j=0;j<PLATS.length;j++)if(PLATS[j][0]===k)return PLATS[j][2];return ''}
+  var CHECKS={bill:['billOk','할인 조건(카드·링크·한도) 확인함'],cash:['cashOk','확실히 받을 수 있어요']};
+
+  function build(){
+    box.textContent='';
+    state.opts.forEach(function(o,i){
+      var c=el('div',{class:'opt',id:'opt'+i});
+      if(state.opts.length>MIN){var d=el('button',{class:'btn del no-print',type:'button','aria-label':'후보 '+(i+1)+' 삭제','data-del':i},'✕');c.appendChild(d)}
+      c.appendChild(el('label',{class:'f',for:'n'+i},'후보 '+(i+1)+' 이름'));
+      var nm=el('input',{class:'name',type:'text',id:'n'+i,'data-i':i,'data-k':'name',maxlength:'30'});nm.value=o.name;c.appendChild(nm);
+      var ps=el('select',{class:'field','data-i':i,'data-k':'plat','aria-label':'후보 '+(i+1)+' 예약처',style:'margin-top:6px;font-size:14px'});PLATS.forEach(function(pl){var op=el('option',{value:pl[0]},pl[1]);if((o.plat||'')===pl[0])op.selected=true;ps.appendChild(op)});c.appendChild(ps);
+      MONEY.forEach(function(f){
+        c.appendChild(el('label',{class:'f',for:f[0]+i},f[1]));
+        var inp=el('input',{type:'text',inputmode:'numeric',id:f[0]+i,'data-i':i,'data-k':f[0],'data-money':'1'});inp.value=comma(o[f[0]]);c.appendChild(inp);
+        if(CHECKS[f[0]]){var ck=CHECKS[f[0]];var lb=el('label',{class:'chk'});var cb=el('input',{type:'checkbox','data-i':i,'data-k':ck[0]});cb.checked=!!o[ck[0]];lb.appendChild(cb);lb.appendChild(document.createTextNode(ck[1]));c.appendChild(lb)}
+      });
+      var row=el('div',{class:'tags'});
+      [['free','무료 취소 가능'],['bf','조식 포함']].forEach(function(t){var lb=el('label',{class:'chk'});var cb=el('input',{type:'checkbox','data-i':i,'data-k':t[0]});cb.checked=!!o[t[0]];lb.appendChild(cb);lb.appendChild(document.createTextNode(t[1]));row.appendChild(lb)});
+      c.appendChild(row);
+      var res=el('div',{class:'res'});
+      [['r1','① 오늘 결제액',''],['r2','② 예상 부담액','big'],['avg','　1박 평균','avg'],['r3','③ 혜택 반영 순부담액','']].forEach(function(r){var dv=el('div',r[2]?{class:r[2]}:null);dv.appendChild(el('span',null,r[1]));dv.appendChild(el('b',{class:r[0]}));res.appendChild(dv)});
+      c.appendChild(res);
+      c.appendChild(el('div',{class:'warns'}));
+      box.appendChild(c);
+    });
+    $('addOpt').disabled=state.opts.length>=MAX;
+    $('nights').value=state.nights||1;
+    calc();
+  }
+
+  function compute(o){
+    var w=[];
+    var inst=o.inst;
+    if(o.price<=0)return {valid:false,w:w};
+    if(inst>o.price){w.push('즉시 할인이 표시 가격보다 커요. 금액을 확인해 주세요(순위에서 제외).');return {valid:false,bad:true,w:w}}
+    if(inst===o.price)w.push('결제액 0원이에요. 포인트 전액 결제가 되는 상품인지 확인하세요.');
+    var r1=o.price-inst;
+    var bill=o.billOk?o.bill:0;
+    if(o.bill>0&&!o.billOk)w.push('청구 할인은 ‘조건 확인함’에 체크해야 반영돼요.');
+    if(bill>r1){w.push('청구 할인이 결제액보다 커요. 결제액까지만 계산했어요.');bill=r1}
+    var r2=r1-bill+o.site;
+    var cash=o.cashOk?o.cash:0;
+    var later=cash+o.pts;
+    if(later>r2){w.push('나중 혜택이 부담액보다 커요. 금액을 다시 확인해 주세요.');later=r2}
+    var r3=r2-later;
+    return {valid:true,r1:r1,r2:r2,r3:r3,w:w};
+  }
+
+  var last=[];
+  function calc(){
+    var nights=Math.max(1,Math.min(60,num($('nights').value)||1));
+    state.nights=nights;
+    last=[];
+    state.opts.forEach(function(o,i){
+      var c=$('opt'+i),r=compute(o);
+      c.classList.remove('best','bad');
+      var w=c.querySelector('.warns');w.textContent=r.w.join(' ');
+      if(r.bad)c.classList.add('bad');
+      if(!r.valid){['r1','r2','r3','avg'].forEach(function(k){c.querySelector('.'+k).textContent='-'});return}
+      c.querySelector('.r1').textContent=won(r.r1);
+      c.querySelector('.r2').textContent=won(r.r2);
+      c.querySelector('.r3').textContent=won(r.r3);
+      c.querySelector('.avg').textContent=nights>1?won(r.r2/nights):'-';
+      last.push({i:i,plat:o.plat||'',name:o.name.trim()||('후보 '+(i+1)),r1:r.r1,r2:r.r2,r3:r.r3,free:o.free,bf:o.bf});
+    });
+    sset('calc',JSON.stringify(state));
+    renderSummary(nights);
+  }
+
+  function renderSummary(nights){
+    var sc=$('summaryCard'),v=$('verdict');
+    sc.textContent='';v.textContent='';
+    if(!last.length){sc.appendChild(el('p',{class:'small',style:'margin:0'},'표시 가격을 넣으면 순위표가 나와요.'));v.appendChild(el('p',null,'후보의 표시 가격을 넣어 주세요.'));return}
+    var sorted=last.slice().sort(function(a,b){return a.r2-b.r2});
+    var tb=el('table',{class:'summary'});
+    var hr=el('tr');['순위','후보','② 예상 부담액',nights>1?'1박 평균':'오늘 결제액','③ 순부담액','조건','예약처'].forEach(function(h,k){hr.appendChild(el('th',k>=2&&k<=4?{class:'n'}:null,h))});tb.appendChild(hr);
+    sorted.forEach(function(r,k){
+      var tr=el('tr',k===0?{class:'top'}:null);
+      tr.appendChild(el('td',null,(k===0?'🏆 ':'')+(k+1)));
+      tr.appendChild(el('td',null,r.name));
+      tr.appendChild(el('td',{class:'n'},won(r.r2)));
+      tr.appendChild(el('td',{class:'n'},nights>1?won(r.r2/nights):won(r.r1)));
+      tr.appendChild(el('td',{class:'n'},won(r.r3)));
+      tr.appendChild(el('td',null,(r.free?'무료취소 ':'취소조건 확인 ')+(r.bf?'· 조식':'')));
+      var td=el('td');var u=platUrl(r.plat);if(u){var a=el('a',{href:u,target:'_blank',rel:'noopener',class:'btn',style:'padding:2px 8px;font-size:13px'},'열기 ↗');td.appendChild(a)}else td.textContent='-';tr.appendChild(td);
+      tb.appendChild(tr);
+    });
+    sc.appendChild(tb);
+    var best=sorted[0];
+    $('opt'+best.i).classList.add('best');
+    var b1=last.reduce(function(m,r){return r.r1<m.r1?r:m});
+    var b3=last.reduce(function(m,r){return r.r3<m.r3?r:m});
+    var p=el('p');p.appendChild(el('b',null,'🏆 예상 부담액 기준 최저: '+best.name+' ('+won(best.r2)+')'));p.appendChild(document.createTextNode(' — 초록 테두리 칸'));v.appendChild(p);
+    v.appendChild(el('p',{class:'small'},'· 오늘 가장 적게 내는 곳: '+b1.name+' ('+won(b1.r1)+')'));
+    v.appendChild(el('p',{class:'small'},'· 확실한 혜택까지 반영하면: '+b3.name+' ('+won(b3.r3)+')'));
+    var notes=[];
+    if(b3.i!==best.i)notes.push('혜택을 정말 받고 쓸 수 있다면 '+josa(b3.name,'이','가')+', 아니라면 '+josa(best.name,'이','가')+' 안전한 선택이에요.');
+    if(!best.free&&last.some(function(r){return r.free&&r.r2-best.r2<=best.r2*0.05}))notes.push('최저가 후보는 무료 취소가 아니에요. 5% 이내 차이로 무료 취소가 되는 후보가 있으니, 일정이 바뀔 수 있다면 그쪽도 고려하세요.');
+    if(!best.bf&&last.some(function(r){return r.bf}))notes.push('조식 포함 후보가 있어요. 조식을 따로 사 먹을 비용까지 생각해 비교하세요.');
+    if(notes.length){var bx=el('div',{class:'box warn',style:'margin-bottom:0'});bx.appendChild(el('b',{class:'t'},'🤔 한 번 더 생각할 점'));notes.forEach(function(n){bx.appendChild(el('div',null,'· '+n))});v.appendChild(bx)}
+  }
+
+  box.addEventListener('input',function(e){
+    var t=e.target,i=+t.getAttribute('data-i'),k=t.getAttribute('data-k');
+    if(isNaN(i)||!k)return;
+    var o=state.opts[i];
+    if(t.type==='checkbox')o[k]=t.checked;
+    else if(t.tagName==='SELECT')o[k]=t.value;
+    else if(t.getAttribute('data-money'))o[k]=num(t.value);
+    else o[k]=t.value;
+    calc();
+  });
+  box.addEventListener('change',function(e){var t=e.target;if(t.type==='checkbox'){var i=+t.getAttribute('data-i');state.opts[i][t.getAttribute('data-k')]=t.checked;calc()}});
+  /* 쉼표는 입력이 끝난 뒤에 넣어 커서가 튀지 않게 */
+  box.addEventListener('focusout',function(e){var t=e.target;if(t.getAttribute&&t.getAttribute('data-money'))t.value=comma(num(t.value))});
+  box.addEventListener('click',function(e){
+    var d=e.target.closest('[data-del]');if(!d)return;
+    var i=+d.getAttribute('data-del');var nm=state.opts[i].name||('후보 '+(i+1));
+    if(!confirm('‘'+nm+'’ 후보를 삭제할까요?'))return;
+    state.opts.splice(i,1);build();
+  });
+  $('nights').addEventListener('input',calc);
+  $('nights').addEventListener('focusout',function(){this.value=state.nights});
+  $('addOpt').addEventListener('click',function(){if(state.opts.length>=MAX)return;state.opts.push(blank(state.opts.length));build();var n=$('price'+(state.opts.length-1));if(n)n.focus()});
+  $('loadEx').addEventListener('click',function(){if(!confirm('지금 입력한 값을 지우고 예시를 불러올까요?'))return;state=clone(EXAMPLE);build();toast('예시를 불러왔어요')});
+  $('clearAll').addEventListener('click',function(){if(!confirm('입력한 값을 모두 지울까요?'))return;state={nights:1,opts:[blank(0),blank(1),blank(2)]};build();toast('모두 지웠어요')});
+
+  function copyText(txt){
+    function fallback(){var ta=el('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);toast(ok?'결과를 복사했어요':'복사가 안 돼요. 직접 선택해 복사해 주세요')}
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(function(){toast('결과를 복사했어요')},fallback)}else fallback();
+  }
+  $('copyRes').addEventListener('click',function(){
+    if(!last.length){toast('먼저 가격을 넣어 주세요');return}
+    var n=state.nights||1;
+    var hotel=$('qName').value.trim();
+    var lines=['🏨 호텔 가격 비교'+(hotel?' — '+hotel:'')+(n>1?' ('+n+'박)':'')];
+    last.slice().sort(function(a,b){return a.r2-b.r2}).forEach(function(r,k){
+      lines.push((k+1)+'. '+r.name+': 예상 부담 '+won(r.r2)+(n>1?' (1박 '+won(r.r2/n)+')':'')+' · '+(r.free?'무료취소':'취소조건 확인')+(r.bf?' · 조식':''));
+    });
+    lines.push('※ 예상 부담액 = 결제액 − 조건 확인한 청구 할인 + 현장 비용');
+    copyText(lines.join('\n'));
+  });
+  build();
+
+  /* 비교 저장·불러오기 */
+  function saves(){var a=sjson('saves',[]);return Array.isArray(a)?a:[]}
+  function renderSaves(){var sl=$('saveList');sl.textContent='';var a=saves();if(!a.length){sl.appendChild(el('option',{value:''},'저장한 비교가 없어요'));return}a.forEach(function(x,k){sl.appendChild(el('option',{value:k},x.name+' ('+x.at+')'))})}
+  $('saveBtn').addEventListener('click',function(){
+    var nm=$('saveName').value.trim()||$('qName').value.trim()||(last[0]?last[0].name+' 비교':'');
+    if(!nm){toast('저장할 이름을 넣어 주세요');return}
+    var a=saves();var d=new Date();var at=(d.getMonth()+1)+'/'+d.getDate()+' '+d.getHours()+':'+(d.getMinutes()<10?'0':'')+d.getMinutes();
+    var idx=-1;a.forEach(function(x,k){if(x.name===nm)idx=k});
+    var item={name:nm,at:at,hotel:$('qName').value.trim(),state:clone(state)};
+    if(idx>=0){if(!confirm('‘'+nm+'’ 저장본을 덮어쓸까요?'))return;a[idx]=item}else{if(a.length>=10){toast('최대 10개까지 저장돼요. 하나를 지워 주세요');return}a.unshift(item)}
+    sset('saves',JSON.stringify(a));renderSaves();toast('‘'+nm+'’ 저장했어요');
+  });
+  $('loadBtn').addEventListener('click',function(){var a=saves(),k=$('saveList').value;if(k===''||!a[k]){toast('불러올 비교를 골라 주세요');return}if(!confirm('지금 입력값을 ‘'+a[k].name+'’ 저장본으로 바꿀까요?'))return;state=clone(a[k].state);state.opts=(state.opts||[]).slice(0,MAX);if(!state.opts.length)state.opts=[blank(0)];$('saveName').value=a[k].name;$('qName').value=a[k].hotel||'';build();toast('불러왔어요')});
+  $('delSaveBtn').addEventListener('click',function(){var a=saves(),k=$('saveList').value;if(k===''||!a[k])return;if(!confirm('‘'+a[k].name+'’ 저장본을 삭제할까요?'))return;a.splice(k,1);sset('saves',JSON.stringify(a));renderSaves();toast('삭제했어요')});
+  renderSaves();
+  $('expBtn').addEventListener('click',function(){
+    var a=saves();if(!a.length){toast('내보낼 저장본이 없어요');return}
+    var blob=new Blob([JSON.stringify({app:'hotel-guide',ver:3,saves:a},null,2)],{type:'application/json'});
+    var x=el('a');x.href=URL.createObjectURL(blob);x.download='호텔비교-저장본.json';document.body.appendChild(x);x.click();setTimeout(function(){URL.revokeObjectURL(x.href);x.remove()},500);
+  });
+  $('impFile').addEventListener('change',function(){
+    var f=this.files&&this.files[0];if(!f)return;var inp=this;
+    var rd=new FileReader();rd.onload=function(){
+      try{
+        var d=JSON.parse(rd.result);if(!d||d.app!=='hotel-guide'||!Array.isArray(d.saves))throw 0;
+        var ok=d.saves.filter(function(x){return x&&typeof x.name==='string'&&x.state&&Array.isArray(x.state.opts)}).map(function(x){return {name:x.name.slice(0,30),at:String(x.at||'').slice(0,20),hotel:String(x.hotel||'').slice(0,80),state:x.state}});
+        var a=saves();ok.forEach(function(x){var i=-1;a.forEach(function(y,k){if(y.name===x.name)i=k});if(i>=0)a[i]=x;else a.push(x)});
+        a=a.slice(0,10);sset('saves',JSON.stringify(a));renderSaves();toast(ok.length+'개를 가져왔어요');
+      }catch(e){toast('이 가이드에서 내보낸 파일이 아니에요')}
+      inp.value='';
+    };rd.readAsText(f);
+  });
+
+  /* 새 예약 시작: 체크·계산기·알림 초기화 (저장한 비교는 유지) */
+  $('newTrip').addEventListener('click',function(){
+    if(!confirm('새 예약을 시작할까요?\n체크리스트·계산기·취소 알림 입력값이 모두 지워져요.\n(저장한 비교는 남아 있어요)'))return;
+    st={};sset('steps','{}');render();
+    state={nights:1,opts:[blank(0),blank(1),blank(2)]};build();$('saveName').value='';$('qName').value='';
+    ['alHotel','alOta','alDue'].forEach(function(id){$(id).value=''});$('alDays').value='3';alarm();
+    toast('새 예약을 시작해요');
+  });
+
+  /* ===== 결제 통화 비교 ===== */
+  var fxIds=['fxAmt','fxRate','fxBrand','fxSvc','fxKrw'];
+  var fxSaved=sjson('fx',null);
+  if(fxSaved)fxIds.forEach(function(id){if(fxSaved[id]!=null)$(id).value=fxSaved[id]});
+  function fx(){
+    var a=dec($('fxAmt').value),r=dec($('fxRate').value),b=dec($('fxBrand').value),s=dec($('fxSvc').value),k=num($('fxKrw').value);
+    var o={};fxIds.forEach(function(id){o[id]=$(id).value});sset('fx',JSON.stringify(o));
+    var out=$('fxOut');out.textContent='';
+    var bad=[];
+    if(isNaN(a))bad.push('현지 통화 금액');if(isNaN(r))bad.push('환율');if(isNaN(b))bad.push('국제브랜드 수수료');if(isNaN(s))bad.push('해외서비스 수수료');
+    if(bad.length){out.appendChild(el('div',{style:'color:var(--red)'},'⚠️ '+bad.join(', ')+' 입력 형식을 확인해 주세요. 소수점은 마침표(.)로 써요. 예: 9.5 (9,5 ✕) · 천 단위 쉼표는 1,350.5처럼 써요.'));return}
+    if(!a||!r){out.textContent='현지 통화 금액과 환율을 넣어 주세요.';return}
+    var warn=[];
+    if(b<0||b>5||s<0||s>5)warn.push('수수료가 0~5% 범위를 벗어났어요. 카드사 안내를 다시 확인하세요.');
+    if(r>2000)warn.push('환율이 매우 커요. ‘현지 통화 1단위 = ?원’인지 확인하세요(예: 엔화 약 9~10원, 달러 약 1,300~1,500원).');
+    if(warn.length)out.appendChild(el('div',{class:'small',style:'color:var(--amber);margin-bottom:4px'},'⚠️ '+warn.join(' ')));
+    var local=a*r*(1+(b+s)/100);
+    var p1=el('div');p1.appendChild(document.createTextNode('현지 통화 결제 예상액: '));p1.appendChild(el('b',null,won(local)));
+    p1.appendChild(el('span',{class:'small'},'  ('+a.toLocaleString('ko-KR')+' × '+r+' × '+(1+(b+s)/100).toFixed(4)+')'));out.appendChild(p1);
+    if(!k){out.appendChild(el('div',{class:'small'},'사이트가 제시한 원화 금액을 넣으면 비교해 드려요.'));return}
+    var diff=k-local;
+    var p2=el('div',{style:'margin-top:6px'});
+    if(Math.abs(diff)<1)p2.appendChild(el('b',{class:'big'},'⚖️ 두 방법이 거의 같아요'));
+    else if(diff>0)p2.appendChild(el('b',{class:'big'},'🟢 현지 통화 결제가 약 '+won(diff)+' 유리 ('+(diff/k*100).toFixed(1)+'%)'));
+    else p2.appendChild(el('b',{class:'big'},'🔵 원화 결제 제시액이 약 '+won(-diff)+' 유리'));
+    out.appendChild(p2);
+    if(diff<0)out.appendChild(el('div',{class:'small',style:'margin-top:4px'},'원화가 싸게 나와도 실제 청구 시 추가 수수료가 붙을 수 있어요. 결제 직전 청구 통화를 다시 확인하세요.'));
+  }
+  fxIds.forEach(function(id){$(id).addEventListener('input',fx)});
+  ['fxAmt','fxKrw'].forEach(function(id){$(id).addEventListener('focusout',function(){var t=$(id);if(id==='fxKrw')t.value=comma(num(t.value));else{var d=dec(t.value);if(!isNaN(d))t.value=d?d.toLocaleString('ko-KR',{maximumFractionDigits:2}):''}})});
+  fx();
+
+  /* ===== 취소 마감 알림 (시간대 반영, UTC로 저장) ===== */
+  var alIds=['alHotel','alOta','alDue','alTz','alDays'];
+  var alSaved=sjson('alarm',null);
+  if(alSaved)alIds.forEach(function(id){if(alSaved[id]!=null&&alSaved[id]!=='')$(id).value=alSaved[id]});
+  var HERE=(function(){try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'Asia/Seoul'}catch(e){return 'Asia/Seoul'}})();
+  function tzOffset(ts,tz){
+    var f=new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    var p={};f.formatToParts(new Date(ts)).forEach(function(x){p[x.type]=x.value});
+    return Date.UTC(+p.year,+p.month-1,+p.day,(+p.hour)%24,+p.minute,+p.second)-ts;
+  }
+  /* 현지 시각 → UTC. 서머타임 전환일의 ‘없는 시각’·‘두 번 있는 시각’을 함께 판별 */
+  function zonedToUtc(raw,tz){
+    var m=/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(raw);if(!m)return null;
+    var guess=Date.UTC(+m[1],+m[2]-1,+m[3],+m[4],+m[5]);
+    var offs=[tzOffset(guess-86400000,tz),tzOffset(guess,tz),tzOffset(guess+86400000,tz)];
+    var cands=[];offs.forEach(function(o){var t=guess-o;if(tzOffset(t,tz)===o&&cands.indexOf(t)<0)cands.push(t)});
+    cands.sort(function(x,y){return x-y});
+    if(!cands.length){var t0=guess-offs[0];return {date:new Date(t0),gap:true}}
+    return {date:new Date(cands[0]),dup:cands.length>1};
+  }
+  function fmt(d,tz){try{return new Intl.DateTimeFormat('ko-KR',{timeZone:tz,year:'numeric',month:'long',day:'numeric',weekday:'short',hour:'numeric',minute:'2-digit'}).format(d)}catch(e){return d.toString()}}
+  function utcStamp(d){return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')}
+  function gcal(title,start,end,details){return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(title)+'&dates='+utcStamp(start)+'/'+utcStamp(end)+'&details='+encodeURIComponent(details)}
+  var alCache=null;
+  function setBtns(on){['alG1','alG2'].forEach(function(id){var a=$(id);if(on)a.removeAttribute('aria-disabled');else{a.setAttribute('aria-disabled','true');a.href='#'}});$('alIcs').disabled=!on}
+  function alarm(){
+    var o={};alIds.forEach(function(id){o[id]=$(id).value});sset('alarm',JSON.stringify(o));
+    var out=$('alOut');out.textContent='';alCache=null;setBtns(false);
+    var raw=$('alDue').value,tz=$('alTz').value||'Asia/Seoul';
+    if(!raw){out.textContent='마감 날짜·시각을 넣으면 결과가 나와요.';return}
+    var zr=zonedToUtc(raw,tz);
+    if(!zr||isNaN(zr.date)){out.appendChild(el('div',{style:'color:var(--red)'},'날짜 형식을 확인해 주세요.'));return}
+    var due=zr.date;
+    if(zr.gap){out.appendChild(el('div',{style:'color:var(--red);margin-bottom:4px'},'⚠️ 이 시각은 서머타임이 시작되는 날이라 현지에 존재하지 않아요. 예약 확인서의 시각을 다시 확인해 주세요. 아래는 시계가 바뀌기 전 기준으로 계산한 값이에요.'))}
+    if(zr.dup){out.appendChild(el('div',{style:'color:var(--amber);margin-bottom:4px'},'⚠️ 이 시각은 서머타임이 끝나는 날이라 현지에서 두 번 있어요. 안전하게 더 이른 쪽으로 계산했어요.'))}
+    var now=new Date(),days=num($('alDays').value)||3;
+    var chk=new Date(due.getTime()-days*86400000);
+    var hh=Number(new Intl.DateTimeFormat('en-US',{timeZone:HERE,hour:'numeric',hourCycle:'h23'}).format(chk));
+    chk=new Date(chk.getTime()+(9-hh)*3600000);chk.setMinutes(0,0,0);
+    var tzLabel=$('alTz').options[$('alTz').selectedIndex].text;
+    var l0=el('div');l0.appendChild(document.createTextNode('⛔ 마감 (예약 기준 · '+tzLabel+'): '));l0.appendChild(el('b',null,fmt(due,tz)));out.appendChild(l0);
+    if(tz!==HERE){var l1=el('div');l1.appendChild(document.createTextNode('🇰🇷 내 기기 시각으로는: '));l1.appendChild(el('b',{style:'color:var(--red)'},fmt(due,HERE)));out.appendChild(l1)}
+    if(due<=now){out.appendChild(el('div',{style:'color:var(--red);margin-top:4px'},'마감 시각이 이미 지났어요. 달력 일정은 만들지 않아요.'));return}
+    var left=due-now,late=chk<=now,urgent=left<3600000;
+    if(late){
+      /* 다음 정시 또는 5분 뒤 중 이른 쪽, 단 마감 15분 전(급하면 지금)보다 늦지 않게 */
+      var nh=new Date(now.getTime()+3600000);nh.setMinutes(0,0,0);
+      var cap=new Date(due.getTime()-15*60000);
+      chk=new Date(Math.max(now.getTime()+60000,Math.min(nh.getTime(),cap.getTime())));
+      if(chk>=due)chk=new Date(now.getTime()+60000);
+    }
+    if(urgent){var u=el('div',{class:'box danger',style:'margin:6px 0'});u.appendChild(el('b',{class:'t'},'🚨 마감까지 1시간도 안 남았어요'));u.appendChild(el('div',null,'달력에 넣을 시간이 없어요. 지금 바로 예약 사이트에서 가격과 취소 여부를 확인하세요.'));out.appendChild(u)}
+    var l2=el('div');l2.appendChild(document.createTextNode('🔎 가격 다시 보기: '));l2.appendChild(el('b',null,fmt(chk,HERE)));out.appendChild(l2);
+    if(late&&!urgent)out.appendChild(el('div',{class:'small',style:'color:var(--amber)'},'다시 볼 날짜가 이미 지나서 마감 전 가장 가까운 시각으로 잡았어요. 오늘 바로 확인하세요.'));
+    var hours=Math.floor((due-now)/3600000);out.appendChild(el('div',{class:'small'},'마감까지 남은 시간: 약 '+(hours>=48?Math.floor(hours/24)+'일':hours+'시간')));
+    var hotel=$('alHotel').value.trim()||'호텔',ota=$('alOta').value.trim();
+    var md=fmt(due,HERE);
+    var details='무료 취소 마감: '+fmt(due,tz)+' ('+tzLabel+')'+(tz!==HERE?'\n내 기기 시각: '+md:'')+(ota?'\n예약한 곳: '+ota:'')+'\n같은 방·같은 조건으로 가격을 다시 확인하고, 더 싸면 새 예약을 먼저 확정한 뒤 기존 예약을 취소하세요.';
+    var t1='[가격 다시 보기] '+hotel+' 무료 취소 마감 전',t2='[최종 마감] '+hotel+' 무료 취소 마감';
+    var e1=new Date(Math.min(chk.getTime()+30*60000,due.getTime())),s2=new Date(Math.max(due.getTime()-30*60000,now.getTime()));
+    $('alG1').href=gcal(t1,chk,e1,details);$('alG2').href=gcal(t2,s2,due,details);
+    setBtns(!urgent);
+    if(urgent)return;
+    alCache={t1:t1,t2:t2,details:details,chk:chk,e1:e1,s2:s2,due:due};
+  }
+  alIds.forEach(function(id){$(id).addEventListener('input',alarm);$(id).addEventListener('change',alarm)});
+  ['alG1','alG2'].forEach(function(id){$(id).addEventListener('click',function(e){if(!alCache){e.preventDefault();toast('마감 날짜·시각을 먼저 넣어 주세요')}})});
+  function icsEsc(x){return String(x).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n')}
+  /* RFC 5545: 한 줄 75바이트 초과 시 접기 (UTF-8 글자 중간에서 자르지 않음) */
+  function icsFold(line){
+    var enc=new TextEncoder(),out=[],cur='',len=0,limit=75;
+    for(var ch of line){var b=enc.encode(ch).length;if(len+b>limit){out.push(cur);cur=' '+ch;len=1+b;limit=75}else{cur+=ch;len+=b}}
+    out.push(cur);return out.join('\r\n');
+  }
+  $('alIcs').addEventListener('click',function(){
+    if(!alCache)return;var c=alCache,now=utcStamp(new Date());
+    var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//hotel-guide//KO','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+      'BEGIN:VEVENT','UID:'+now+'-check@hotel-guide','DTSTAMP:'+now,'DTSTART:'+utcStamp(c.chk),'DTEND:'+utcStamp(c.e1),'SUMMARY:'+icsEsc(c.t1),'DESCRIPTION:'+icsEsc(c.details),
+      'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(c.t1),'TRIGGER:PT0M','END:VALARM','END:VEVENT',
+      'BEGIN:VEVENT','UID:'+now+'-due@hotel-guide','DTSTAMP:'+now,'DTSTART:'+utcStamp(c.s2),'DTEND:'+utcStamp(c.due),'SUMMARY:'+icsEsc(c.t2),'DESCRIPTION:'+icsEsc(c.details),
+      'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc('1시간 뒤 무료 취소 마감이에요'),'TRIGGER:-PT30M','END:VALARM','END:VEVENT','END:VCALENDAR'].map(icsFold).join('\r\n');
+    var blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});var a=el('a');a.href=URL.createObjectURL(blob);a.download='취소마감-알림.ics';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);
+    toast('달력 파일을 받았어요. 열면 일정 2개가 추가돼요');
+  });
+  alarm();
+})();
+</script>
+</body>
+</html>
